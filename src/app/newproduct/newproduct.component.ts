@@ -80,7 +80,8 @@ async submitForm() {
   formDataelectronicos.append('nombre', this.producto.nombre);
   formDataelectronicos.append('descripcion', this.producto.descripcion);
   formDataelectronicos.append('precio', this.producto.precio);
-  formDataelectronicos.append('codigo', "PD"+this.conteoProducto+1);
+  formDataelectronicos.append('codigo', "PD" + (Number(this.conteoProducto) + 1));
+
   formDataelectronicos.append('stock', this.producto.stock);
   //formDataelectronicos.append('filename', "gato");
 

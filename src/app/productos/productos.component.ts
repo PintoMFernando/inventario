@@ -25,6 +25,7 @@ export class ProductosComponent {
   algo:number =0;
   allproductos:any;
   contador: number = 0; 
+  urlImage:string= 'http://localhost:3000/upload/';
 
   constructor(
     private modalService: ModalserviceService,

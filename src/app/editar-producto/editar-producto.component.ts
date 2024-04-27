@@ -3,6 +3,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ProductoService } from '../services/producto.service';
 import { lastValueFrom } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { ModalserviceService } from '../services/modalservice.service';
 
 @Component({
   selector: 'app-editar-producto',
@@ -25,6 +26,7 @@ export class EditarProductoComponent {
     public productoService: ProductoService,
     private cdRef: ChangeDetectorRef, 
     private messageService: MessageService, 
+    private modalService:ModalserviceService
 
   ){
     this.evento = new File([],'');
@@ -64,9 +66,24 @@ export class EditarProductoComponent {
 
   
 
-  submitForm() {
+  async submitForm() {
     console.log('Producto registrado:',this.miProducto);
+    console.log('Producto mi ID==:',this.miProducto[0].idproducto);
+    
     // Aquí podrías enviar los datos del producto a tu backend para su procesamiento y almacenamiento
+    try {
+      const response = this.productoService.patchProducto(this.miProducto[0].idproducto,this.miProducto)
+      await this.messageService.add({ severity: 'info', summary: 'Confirmado!', detail: 'Producto Editado Con exito' });
+      await  this.modalService.closeModal();
+      await this.modalService.enviarMensaje('que se ejecute');
+      console.log('Respuesta del backend:', response);
+      console.log('Respuesta entra a mi archivo:', this.evento);
+  
+      // Aquí puedes manejar la respuesta del backend, por ejemplo, mostrar un mensaje al usuario
+    } catch (error) {
+      console.error('Error al llamar al servicio:', error);
+      // Aquí puedes manejar el error, por ejemplo, mostrar un mensaje de error al usuario
+    }
   }
 
 

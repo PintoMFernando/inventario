@@ -52,12 +52,9 @@ export class ProductoService {
    
 
 
-    async patchProducto(idproducto: string, observacion:string) {
-      const datos = {
-        observacion: observacion,
-        
-      };
-    
+    async patchProducto(idproducto: string, misDatos:any) {
+      const datos = misDatos[0];
+     console.log("es minjson",datos)
       try{
        return  await firstValueFrom(this.http.patch(`${this.baseUrl}/producto/${idproducto}`, datos, { headers: this.headers }))
       }catch(e){
@@ -121,6 +118,7 @@ verProducto(idproducto:string): Observable<producto>{
     return response; // Devuelve el conteo de productos
   }
     
+
 
 
 

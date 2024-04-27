@@ -8,7 +8,8 @@
         <p><strong>Precio:</strong> {{dat.precio}}  </p>
       </div>
       <div class="product-image">
-        <img [src]="urlImage" alt="Imagen del Producto" width="100" class="imagen-con-contorno">
+        <img *ngIf="nombreImage !== null"  [src]="urlImage+nombreImage" alt="Imagen del Producto" width="100" class="imagen-con-contorno">
+        <img *ngIf="nombreImage === null" src="assets/images/SINFOTO.jpg" alt="Imagen Alternativa" width="100" class="imagen-con-contorno">
         
       </div>
     </div>

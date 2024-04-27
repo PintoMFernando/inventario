@@ -15,6 +15,7 @@ export class VerProductoComponent {
   data:any;
   miProducto:any []=[];
   urlImage:string= 'http://localhost:3000/upload/';
+  nombreImage:string =''; 
 
   constructor(
     public ref: DynamicDialogConfig,
@@ -42,7 +43,7 @@ export class VerProductoComponent {
     console.log("traer mis datos?????",this.miProducto)
     console.log("traer mis datoasdasdasdas?????",data[0].nombre)
     console.log("mi urllll?????",this.urlImage+data[0].image)
-    this.urlImage=this.urlImage+data[0].image
+    this.nombreImage=data[0].image
     this.cdRef.detectChanges();
   }
 

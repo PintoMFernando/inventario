@@ -44,12 +44,15 @@
             
         </tr>
     </ng-template>
-   
+   urlImage
     <ng-template pTemplate="body" let-producto let-i="rowIndex">
         <tr >
             <td>{{ (allproductos && allproductos.length) ? i + 1 : '' }}</td>
             <td>{{ producto.nombre }}</td>
-            <td>{{ producto.imagen }}</td>
+            
+            <img *ngIf="producto!.image !== null" [src]="urlImage + producto!.image" alt="Imagen del Producto" width="100" class="imagen-con-contorno">
+       <img *ngIf="producto!.image === null" src="assets/images/SINFOTO.jpg" alt="Imagen Alternativa" width="100" class="imagen-con-contorno">
+
             <td>{{ producto.codigo }}</td>
             <td>{{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
