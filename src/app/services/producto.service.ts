@@ -119,7 +119,21 @@ verProducto(idproducto:string): Observable<producto>{
   }
     
 
+  
 
+  async deleteProducto(idproducto:string){
+    //importante manejar el subscribe para eliminar
+    console.log(idproducto);
+ return await this.http.delete(`${this.baseUrl}/producto/${idproducto}`).subscribe(
+   () => {
+     console.log('producto eliminada correctamente');
+   },
+   (error) => {
+     console.error('Error al eliminar el prpoducto', error);
+   }
+ );;
+
+}
 
 
 }

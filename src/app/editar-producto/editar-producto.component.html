@@ -27,13 +27,13 @@
     <tr>
         <th>
         <div class="form-group" >
-            <img src="" alt="Imagen del Producto" width="200">
+            <img *ngIf="nombreImage !== null"  [src]="urlImage+nombreImage" alt="Imagen del Producto" width="100" class="imagen-con-contorno">
+            <img *ngIf="nombreImage === null" src="assets/images/SINFOTO.jpg" alt="Imagen Alternativa" width="100" class="imagen-con-contorno">
           </div>
         </th>
         <th>
         <div class="form-group" >
-        <p-fileUpload mode="basic" [auto]="true" chooseLabel="Imagen"[disabled]="imagenSeleccionada"  name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onUpload($event)"></p-fileUpload>
-    </div>
+            <p-fileUpload mode="basic" [auto]="true" chooseLabel="Imagen"[disabled]="imagenSeleccionada"  name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onUpload($event)"></p-fileUpload>  </div>
 </th>
 </tr>
         <button type="submit">Editar Producto</button>

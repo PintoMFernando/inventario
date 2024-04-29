@@ -39,6 +39,7 @@ import { InformediarioComponent } from './informediario/informediario.component'
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { CommonModule } from '@angular/common';
+import { CarouselModule } from 'primeng/carousel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import { CommonModule } from '@angular/common';
     InicioComponent,
     InformemensualComponent,
     InformediarioComponent,
+  
     
   ],
   imports: [
@@ -81,6 +83,8 @@ import { CommonModule } from '@angular/common';
     FileUploadModule,
     FormsModule,
     CommonModule, 
+    CarouselModule
+    
     
     
     

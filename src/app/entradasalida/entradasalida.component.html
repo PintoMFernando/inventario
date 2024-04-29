@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-<p-table #dt1 [value]="products" [tableStyle]="{ 'min-width': '68rem' }"
+<p-table #dt1 [value]="allproductos" [tableStyle]="{ 'min-width': '68rem' }"
 [paginator]="true"
 [rows]="1"
 [globalFilterFields]="['nombre','codigo']"
@@ -11,7 +11,7 @@
 <ng-template pTemplate="caption">
     <tr>
         <th>
-            <span>FECHA: 2/3/2023</span>
+            <span>{{fechaDeHoy}}</span>
         </th>   
     
         <th style="flex-grow: 1; display: flex; justify-content: center; font-size: 40px;">
@@ -38,13 +38,13 @@
            
             <table class="center">
                 <tr>
-                    <td>NOMBRE Producto {{ product.id }}</td> 
+                    <td>Producto: {{ product.nombre }}</td> 
                 </tr>
                 <tr>
-                  <td>Cantidad: <input type="text" style="width: 100px;"></td>
+                  <td>Cantidad: <input type="number" style="width: 100px;" #cantidadInput></td>
                 </tr>
                 <tr>
-                  <td align="center" ><button (click)="agregarVenta($event)" >Agregar</button></td>
+                  <td align="center" ><button (click)="agregarVenta(product.idproducto,product.nombre,cantidadInput.value)" >Agregar</button></td>
                 </tr>
               </table>
        
@@ -81,10 +81,10 @@
 
 <ng-template pTemplate="body" let-entradas>
     <tr>
-        <td>{{ entradas.codigo }}</td>
-        <td>{{ entradas.nombre }}</td>
-        <td>{{ entradas.precio }}</td>
-        <td>{{ entradas.fecha }}</td>
+        <td>{{ entradas.identradas?.codigo }}</td>
+        <td>{{ entradas.identradas?.nombre }}</td>
+        <td>{{ entradas.identradas?.precio }}</td>
+        <td>{{ entradas.created_at }}</td>
         <td>{{ entradas.cantidad }}</td>
        
         

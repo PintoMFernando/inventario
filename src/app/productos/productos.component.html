@@ -4,7 +4,7 @@
 
 <p-table #dt1 [value]="allproductos" [tableStyle]="{ 'min-width': '68rem' }"
 [paginator]="true"
-[rows]="8"
+[rows]="5"
 [globalFilterFields]="['nombre','codigo']"
 
 >
@@ -50,18 +50,21 @@
             <td>{{ (allproductos && allproductos.length) ? i + 1 : '' }}</td>
             <td>{{ producto.nombre }}</td>
             
-            <img *ngIf="producto!.image !== null" [src]="urlImage + producto!.image" alt="Imagen del Producto" width="100" class="imagen-con-contorno">
-       <img *ngIf="producto!.image === null" src="assets/images/SINFOTO.jpg" alt="Imagen Alternativa" width="100" class="imagen-con-contorno">
+            <img *ngIf="producto!.image !== null" [src]="urlImage + producto!.image" alt="Imagen del Producto" width="75" height="75"class="imagen-con-contorno">
+       <img *ngIf="producto!.image === null" src="assets/images/SINFOTO.jpg" alt="Imagen Alternativa" width="75" height="75"class="imagen-con-contorno">
 
             <td>{{ producto.codigo }}</td>
             <td>{{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
-            <td><p-tag [value]="allproductos.status" [severity]="getSeverity(allproductos.status)"></p-tag></td>
+            
+            <td>
+                <p-tag [value]="(producto.stock === 0 || producto.stock === 1) ? 'Sin stock' : (producto.stock > 1 && producto.stock < 10) ? 'Normal' : 'Con stock'" [severity]="getSeverity(producto.stock)"></p-tag>
+              </td>
             <td>
                 <span class="icon">
                     <i class="pi pi-eye" style="font-size: 1rem;color: rgb(63, 216, 132); margin-right: 5px;" title="Ver" (click)="verProducto(producto.idproducto)"></i>
                     <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(producto.idproducto)" title="Editar"></i>
-                    <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar($event)" title="Eliminar"></i>
+                    <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(producto.idproducto)" title="Eliminar"></i>
                 </span>
             </td>
             

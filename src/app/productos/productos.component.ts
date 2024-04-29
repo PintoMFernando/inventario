@@ -51,13 +51,13 @@ export class ProductosComponent {
 
     
   }
-  getSeverity(status: string): "success" | "warning" | "danger" | undefined {
-    switch (status) {
-        case 'Bueno':
+  getSeverity(status: number): "success" | "warning" | "danger" | undefined {
+    switch (true) {
+        case status > 10 :
             return 'success';
-        case 'Regular':
+        case status > 1 && status <10:
             return 'warning';
-        case 'Bajo':
+        case status == 0 || status == 1  :
             return 'danger';
         default:
             return undefined; // o algún valor por defecto que desees
@@ -129,9 +129,9 @@ this.modalService.openModal(data,EditarProductoComponent);
 
 
 }
-eliminar(event: Event) {
+async eliminar(idproducto: string) {
   this.confirmationService.confirm({
-      target: event.target as EventTarget,
+     // target: event.target as EventTarget,
       message: 'Esta Seguro de Eliminar este Producto?',
       header: 'Confirmacion',
       icon: 'pi pi-exclamation-triangle',
@@ -140,7 +140,9 @@ eliminar(event: Event) {
       acceptLabel: 'Sí', 
       rejectLabel: 'No',
       rejectButtonStyleClass:"p-button-text",
-      accept: () => {
+      accept: async () => {
+        await  this.productoService.deleteProducto(idproducto);
+        await this.modalService.enviarMensaje('que se ejecute');
           this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'El Producto se elimino con Exito' });
       },
       reject: () => {
