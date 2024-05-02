@@ -6,6 +6,7 @@ import { ProductoService } from '../services/producto.service';
 import { EntradasService } from '../services/entradas.service';
 import { format } from 'date-fns';
 import { Subscription } from 'rxjs';
+import { EditarEntradaComponent } from '../editar-entrada/editar-entrada.component';
 @Component({
   selector: 'app-entradasalida',
   templateUrl: './entradasalida.component.html',
@@ -79,7 +80,7 @@ export class EntradasalidaComponent {
 
   
 
-  async agregarVenta(idproducto:string,nombreProducto:string,cantidad:any){
+  async agregarVenta(idproducto:string,nombreProducto:string,cantidad:any, precio:any){
     console.log("que es esto??",idproducto,cantidad)
       this.confirmationService.confirm({
          // target: event.target as EventTarget,
@@ -92,7 +93,7 @@ export class EntradasalidaComponent {
           rejectLabel: 'No',
           rejectButtonStyleClass:"p-button-text",
           accept: async () => {
-              await this.entradasService.agregarEntradas(idproducto,cantidad);
+              await this.entradasService.agregarEntradas(idproducto,cantidad,precio);
               await this.modalService.enviarMensaje('que se ejecute');
               this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'El Producto se Agrego hoy con Exito' });
           },
@@ -123,6 +124,53 @@ export class EntradasalidaComponent {
   await this.entradas.forEach((producto:any, index:any) => {
     producto.posicion = index + 1;
   });
+  }
+
+
+  async editarProducto(nombreproducto:string,identrada:string,cantidad:number,precioentrada:number){
+
+    const data = {header: 'Editar Entrada ',
+   width: '40%',
+   height: '50%',
+   data:{
+    nombreproducto:nombreproducto,
+    identrada:identrada,
+    cantidad:cantidad,
+    precioentrada:precioentrada,
+   }}
+this.modalService.openModal(data,EditarEntradaComponent);
+
+
+
+
+
+
+  }
+
+  async eliminar(identrada:string,nombreProducto:string){
+   // this.entradasService.eliminarEntrada(identrada);
+
+    this.confirmationService.confirm({
+      // target: event.target as EventTarget,
+       message: 'Esta Seguro de Eliminar '+ nombreProducto + ' como Entrada?' +' No podra Recuperarla.',
+       header: 'Confirmacion',
+       icon: 'pi pi-exclamation-triangle',
+       acceptIcon:"none",
+       rejectIcon:"none",
+       acceptLabel: 'Sí', 
+       rejectLabel: 'No',
+       rejectButtonStyleClass:"p-button-text",
+       accept: async () => {
+         await  this.entradasService.eliminarEntrada(identrada);
+         await this.modalService.enviarMensaje('que se ejecute');
+           this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'La entrada del Producto se elimino con Exito' });
+       },
+       reject: () => {
+           this.messageService.add({ severity: 'error', summary: 'Cancelado!!', detail: 'Se Cancelo la Eliminacion', life: 3000 });
+       }
+   });
+   
+
   }
 
 

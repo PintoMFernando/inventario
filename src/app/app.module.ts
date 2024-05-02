@@ -40,6 +40,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
+import { EditarEntradaComponent } from './editar-entrada/editar-entrada.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { CarouselModule } from 'primeng/carousel';
     InicioComponent,
     InformemensualComponent,
     InformediarioComponent,
+    EditarEntradaComponent,
   
     
   ],

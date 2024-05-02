@@ -44,7 +44,10 @@
                   <td>Cantidad: <input type="number" style="width: 100px;" #cantidadInput></td>
                 </tr>
                 <tr>
-                  <td align="center" ><button (click)="agregarVenta(product.idproducto,product.nombre,cantidadInput.value)" >Agregar</button></td>
+                    <td>Precio Total: <input type="number" style="width: 100px;" #precioInput></td>
+                  </tr>
+                <tr>
+                  <td align="center" ><button (click)="agregarVenta(product.idproducto,product.nombre,cantidadInput.value,precioInput.value)" >Agregar</button></td>
                 </tr>
               </table>
        
@@ -71,9 +74,10 @@
     <tr>
         <th>Codigo</th>
         <th pSortableColumn="nombre">Nombre</th>
-        <th >Precio</th>
-        <th>Fecha</th>
         <th>Cantidad</th>
+        <th >Precio Total</th>
+        <th>Fecha</th>
+        <th>Opciones</th>
 
         
     </tr>
@@ -83,10 +87,15 @@
     <tr>
         <td>{{ entradas.identradas?.codigo }}</td>
         <td>{{ entradas.identradas?.nombre }}</td>
+        <td>{{ entradas.cantidad }}</td>
         <td>{{ entradas.identradas?.precio }}</td>
         <td>{{ entradas.created_at }}</td>
-        <td>{{ entradas.cantidad }}</td>
-       
+        <td>
+        <span class="icon">
+            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(entradas.identradas?.nombre,entradas.identrada,entradas.cantidad,entradas.precioentrada)" title="Editar"></i>
+            <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(entradas.identrada,entradas.identradas?.nombre)" title="Eliminar"></i>
+        </span>
+    </td>
         
         
     </tr>
