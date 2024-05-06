@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ProductoService } from '../services/producto.service';
+import { SalidasService } from '../services/salidas.service';
+import { ModalserviceService } from '../services/modalservice.service';
+import { Subscription } from 'rxjs';
+import { EditarSalidaComponent } from '../editar-salida/editar-salida.component';
 
 @Component({
   selector: 'app-salidas',
@@ -12,50 +17,190 @@ export class SalidasComponent {
   products!: any;
   salidas!: any;
   algo:number =0;
-
+  fechaDeHoy = new Date().toLocaleDateString('es-ES');
+  allproductos:any;
+  cantidadAComprar: number = 0;
+  suscripcion: Subscription;
+  mensaje: string = '';
+  
   constructor(
     
     private confirmationService: ConfirmationService, 
-    private messageService: MessageService
-  ) {}
+    
+    private messageService: MessageService,
+    private productoService: ProductoService,
+    private cdRef: ChangeDetectorRef,
+    private salidasService: SalidasService,
+    private modalService: ModalserviceService
+  ) {
+    this.suscripcion = this.modalService.obtenerMensaje().subscribe((mensaje) => {
+    //  console.log("concluye el mensaje");
+    this.listarSalidas();
+    this.traerProductos();
+    this.cdRef.detectChanges();
+    this.mensaje = mensaje;
+    console.log(mensaje);
+    });}
 
   ngOnInit() {
-    this.products = [
-      { id: 1, nombre: 'Producto 1', imagen:'imagen1',codigo:'pc1' ,precio: 10.99 },
-      { id: 2, nombre: 'Producto 2', imagen:'imagen2',codigo:'pc2',precio: 20.99 },
-      { id: 3, nombre: 'Producto 3', imagen:'imagen3',codigo:'pc3',precio: 30.99 }
-    ];
 
-    this.salidas = [
-      {  nombre: 'Producto 1', fecha:'2/3/2024',codigo:'pc1' ,precio: 10.99,cantidad:12 },
-      {  nombre: 'Producto 2', fecha:'2/3/2024',codigo:'pc2',precio: 20.99 ,cantidad:3},
-      { nombre: 'Producto 3', fecha:'3/3/2024',codigo:'pc3',precio: 30.99 ,cantidad:4},
-      { nombre: 'Producto 4', fecha:'3/3/2024',codigo:'pc4',precio: 50.99 ,cantidad:7}
-    ];
+    this.traerProductos();
+    this.listarSalidas();
+    
+
+   
 
   }
 
-  agregarSalida(event: Event){
+  async traerProductos(){
+  
+    (await this.productoService.traerProductos()).subscribe({
+      next: (data:any)=>{ 
+       
+        this.allproductos=data;
+        console.log("aqui estan todos mis datos salidas",this.allproductos)
+        
+    
+    },
+      complete: () => { }, // completeHandler
+      error: (error) => { console.log('Este es el error', error)},    
+           
+  });
+  
+  await this.cdRef.detectChanges();
+  await this.allproductos.forEach((producto:any, index:any) => {
+    producto.posicion = index + 1;
+  });
+  }
+
+
+
+  async agregarSalida(idproducto:string,precioProducto:number, cantidad:any, stockInventario:number){
+
+    console.log("aqui estan todas mis datos?",idproducto,precioProducto,cantidad,stockInventario)
+    
+    if(cantidad > stockInventario){
       this.confirmationService.confirm({
-          target: event.target as EventTarget,
-          message: 'Esta Seguro de Agregar este Producto?',
-          header: 'Confirmacion',
-          icon: 'pi pi-exclamation-triangle',
-          acceptIcon:"none",
-          rejectIcon:"none",
-          acceptLabel: 'Sí', 
-          rejectLabel: 'No',
-          rejectButtonStyleClass:"p-button-text",
-          accept: () => {
-              this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'El Producto se Agrego hoy con Exito' });
-          },
-          reject: () => {
-              this.messageService.add({ severity: 'error', summary: 'Cancelado!!', detail: 'Se Cancelo la Operacion', life: 3000 });
-          }
-      });
+          
+        message: 'No hay Suficientes Productos en Inventario para la Salida, Seleccione otra cantidad',
+        header: 'ATENCION!!',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon:"none",
+        rejectIcon:"none",
+        acceptLabel: 'Aceptar', 
+        rejectButtonStyleClass:"p-button-text",
+        accept: () => {
+            this.messageService.add({ severity: 'warn', summary: 'Cancelado', detail: 'Compruebe el Producto' });
+        },
+        rejectVisible: false
+        
+    });
+    }else{
+      const preciototal= precioProducto*cantidad;
+      
+     await  this.confirmationService.confirm({
+          
+        message: 'Esta Seguro de Realizar esta Salida?',
+        header: 'Confirmacion',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon:"none",
+        rejectIcon:"none",
+        acceptLabel: 'Sí', 
+        rejectLabel: 'No',
+        rejectButtonStyleClass:"p-button-text",
+        accept: async () => {
+           await this.salidasService.agregarSalidas(idproducto,precioProducto,cantidad,preciototal);
+           await this.modalService.enviarMensaje('que se ejecute');
+            this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'Se realizo una Salida con Exito' });
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Cancelado!!', detail: 'Se Cancelo la Operacion', life: 3000 });
+        }
+    });
+
+
+    }
+     
     
 
   }
+
+  getPrecioTotal(precio:number,cantidad:number): number {
+    return precio * cantidad;
+  }
+
+  async listarSalidas(){
+    (await this.salidasService.traerSalidas()).subscribe({
+      next: (data:any)=>{ 
+       
+        this.salidas=data;
+        console.log("aqui estan todos mis datos entradas salidas",this.salidas)
+        
+    
+    },
+      complete: () => { }, // completeHandler
+      error: (error) => { console.log('Este es el error', error)},    
+           
+  });
+  
+  await this.cdRef.detectChanges();
+  await this.salidas.forEach((producto:any, index:any) => {
+    producto.posicion = index + 1;
+  });
+
+  }
+
+
+  async editarProducto(nombreproducto:string,idsalida:string,cantidad:number,preciototal:number,preciosalida:number,stockInventario:number,idproducto:string){
+
+    const data = {header: 'Editar Salida ',
+   width: '40%',
+   height: '50%',
+   data:{
+    nombreproducto:nombreproducto,
+    idsalida:idsalida,
+    cantidad:cantidad,
+    preciototal:preciototal,
+    preciosalida:preciosalida,
+    stockInventario:stockInventario,
+    idproducto:idproducto
+   }}
+this.modalService.openModal(data,EditarSalidaComponent);
+
+
+
+
+
+
+  }
+
+  async eliminar(idsalida:string,nombreProducto:string,idproducto:string,cantidad:number){
+   // this.entradasService.eliminarEntrada(identrada);
+
+    this.confirmationService.confirm({
+      // target: event.target as EventTarget,
+       message: 'Esta Seguro de Eliminar '+ nombreProducto + ' como Salida?' +' No podra Recuperarla.',
+       header: 'Confirmacion',
+       icon: 'pi pi-exclamation-triangle',
+       acceptIcon:"none",
+       rejectIcon:"none",
+       acceptLabel: 'Sí', 
+       rejectLabel: 'No',
+       rejectButtonStyleClass:"p-button-text",
+       accept: async () => {
+         await  this.salidasService.eliminarSalida(idsalida,idproducto,cantidad);
+         await this.modalService.enviarMensaje('que se ejecute');
+         this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'La salida del Producto se elimino con Exito' });
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Cancelado!!', detail: 'Se Cancelo la Eliminacion', life: 3000 });
+        }
+    });
+    
+ 
+   }
+       
+
 
 
 }

@@ -92,8 +92,8 @@
         <td>{{ entradas.created_at }}</td>
         <td>
         <span class="icon">
-            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(entradas.identradas?.nombre,entradas.identrada,entradas.cantidad,entradas.precioentrada)" title="Editar"></i>
-            <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(entradas.identrada,entradas.identradas?.nombre)" title="Eliminar"></i>
+            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(entradas.identradas?.nombre,entradas.identrada,entradas.cantidad,entradas.identradas?.precio,entradas.identradas?.stock,entradas.identradas?.idproducto )" title="Editar"></i>
+            <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(entradas.identrada,entradas.identradas?.nombre,entradas.identradas?.idproducto,entradas.cantidad )" title="Eliminar"></i>
         </span>
     </td>
         

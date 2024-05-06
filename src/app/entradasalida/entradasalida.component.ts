@@ -7,6 +7,7 @@ import { EntradasService } from '../services/entradas.service';
 import { format } from 'date-fns';
 import { Subscription } from 'rxjs';
 import { EditarEntradaComponent } from '../editar-entrada/editar-entrada.component';
+
 @Component({
   selector: 'app-entradasalida',
   templateUrl: './entradasalida.component.html',
@@ -28,11 +29,13 @@ export class EntradasalidaComponent {
     private dialogService: DialogService,
     private productoService: ProductoService,
     private cdRef: ChangeDetectorRef,
-    private entradasService:EntradasService
+    private entradasService:EntradasService,
+    
   ) {
     this.suscripcion = this.modalService.obtenerMensaje().subscribe((mensaje) => {
       //  console.log("concluye el mensaje");
       this.listarEntradas();
+      this.traerProductos();
       this.cdRef.detectChanges();
       this.mensaje = mensaje;
       console.log(mensaje);
@@ -95,6 +98,7 @@ export class EntradasalidaComponent {
           accept: async () => {
               await this.entradasService.agregarEntradas(idproducto,cantidad,precio);
               await this.modalService.enviarMensaje('que se ejecute');
+              await this.cdRef.detectChanges();
               this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'El Producto se Agrego hoy con Exito' });
           },
           reject: () => {
@@ -127,7 +131,7 @@ export class EntradasalidaComponent {
   }
 
 
-  async editarProducto(nombreproducto:string,identrada:string,cantidad:number,precioentrada:number){
+  async editarProducto(nombreproducto:string,identrada:string,cantidad:number,precioentrada:number,stockinventario:number,idproducto:string){
 
     const data = {header: 'Editar Entrada ',
    width: '40%',
@@ -137,6 +141,8 @@ export class EntradasalidaComponent {
     identrada:identrada,
     cantidad:cantidad,
     precioentrada:precioentrada,
+    stockinventario:stockinventario,
+    idproducto:idproducto
    }}
 this.modalService.openModal(data,EditarEntradaComponent);
 
@@ -147,7 +153,7 @@ this.modalService.openModal(data,EditarEntradaComponent);
 
   }
 
-  async eliminar(identrada:string,nombreProducto:string){
+  async eliminar(identrada:string,nombreProducto:string,idproducto:string,cantidad:number){
    // this.entradasService.eliminarEntrada(identrada);
 
     this.confirmationService.confirm({
@@ -161,7 +167,7 @@ this.modalService.openModal(data,EditarEntradaComponent);
        rejectLabel: 'No',
        rejectButtonStyleClass:"p-button-text",
        accept: async () => {
-         await  this.entradasService.eliminarEntrada(identrada);
+         await  this.entradasService.eliminarEntrada(identrada,idproducto,cantidad);
          await this.modalService.enviarMensaje('que se ejecute');
            this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'La entrada del Producto se elimino con Exito' });
        },

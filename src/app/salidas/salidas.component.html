@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-<p-table #dt1 [value]="products" [tableStyle]="{ 'min-width': '68rem' }"
+<p-table #dt1 [value]="allproductos" [tableStyle]="{ 'min-width': '68rem' }"
 [paginator]="true"
 [rows]="1"
 [globalFilterFields]="['nombre','codigo']"
@@ -11,7 +11,7 @@
 <ng-template pTemplate="caption">
     <tr>
         <th>
-            <span>FECHA: 2/3/2023</span>
+            <span>FECHA: {{fechaDeHoy}}</span>
         </th>   
     
         <th style="flex-grow: 1; display: flex; justify-content: center; font-size: 40px;">
@@ -33,23 +33,28 @@
 
 
 
-    <ng-template pTemplate="body" let-product>
+<ng-template pTemplate="body" let-product>
      
            
-            <table class="center">
-                <tr>
-                    <td>NOMBRE Producto {{ product.id }}</td> 
-                </tr>
-                <tr>
-                  <td>Cantidad: <input type="text" style="width: 100px;"></td>
-                </tr>
-                <tr>
-                  <td align="center" ><button (click)="agregarSalida($event)" >Agregar</button></td>
-                </tr>
-              </table>
-       
-        
-    </ng-template>
+    <table class="center">
+        <tr>
+            <td  colspan="2" align="center">Producto: {{ product.nombre }}</td> 
+        </tr>
+        <tr>
+          <td>Cantidad en Iventario: {{product.stock}}</td>
+          <td>Precio Unidad:<input type="number" id="precio" name="precio"  min="0" step="0.01" [(ngModel)]="product.precio" style="width: 100px;" required></td>
+        </tr>
+        <tr>
+            <td>Cantidad a Vender:<input type="number" style="width: 100px;" [(ngModel)]="cantidadAComprar" ></td>
+            <td>Precio Total: {{ getPrecioTotal(product.precio,cantidadAComprar) }}</td>
+          </tr>
+        <tr>
+          <td colspan="2" align="center" ><button (click)="agregarSalida(product.idproducto,product.precio,cantidadAComprar,product.stock)" >Agregar</button></td>
+        </tr>
+      </table>
+
+
+</ng-template>
     
 </p-table>
 
@@ -71,9 +76,10 @@
     <tr>
         <th>Codigo</th>
         <th pSortableColumn="nombre">Nombre</th>
-        <th >Precio</th>
+        <th >Catidad</th>
+        <th>Precio Total</th>
         <th>Fecha</th>
-        <th>Cantidad</th>
+        <th>Opciones</th>
 
         
     </tr>
@@ -81,15 +87,17 @@
 
 <ng-template pTemplate="body" let-salidas>
     <tr>
-        <td>{{ salidas.codigo }}</td>
-        <td>{{ salidas.nombre }}</td>
-        <td>{{ salidas.precio }}</td>
-        <td>{{ salidas.fecha }}</td>
+        <td>{{ salidas.idsalidas?.codigo }}</td>
+        <td>{{ salidas.idsalidas?.nombre }}</td>
         <td>{{ salidas.cantidad }}</td>
-       
-        
-        
-    </tr>
+        <td>{{ salidas.preciototal }}</td>
+        <td>{{ salidas.created_at }}</td>
+        <td>
+        <span class="icon">
+            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(salidas.idsalidas?.nombre,salidas.idsalida,salidas.cantidad,salidas.preciototal,salidas.preciosalida,salidas.idsalidas?.stock,salidas.idproducto)" title="Editar"></i>
+            <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(salidas.idsalida,salidas.identradas?.nombre,salidas.idproducto,salidas.cantidad)" title="Eliminar"></i>
+        </span>
+    </td>
 </ng-template>
     
 </p-table>

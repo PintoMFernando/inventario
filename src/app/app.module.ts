@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { NgModule ,LOCALE_ID} from '@angular/core';
+import localeEs from '@angular/common/locales/es';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +42,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
 import { EditarEntradaComponent } from './editar-entrada/editar-entrada.component';
+import { EditarSalidaComponent } from './editar-salida/editar-salida.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +63,7 @@ import { EditarEntradaComponent } from './editar-entrada/editar-entrada.componen
     InformemensualComponent,
     InformediarioComponent,
     EditarEntradaComponent,
+    EditarSalidaComponent,
   
     
   ],
@@ -95,7 +101,7 @@ import { EditarEntradaComponent } from './editar-entrada/editar-entrada.componen
    
 
   ],
-  providers: [DialogService,ConfirmationService, MessageService],
+  providers: [DialogService,ConfirmationService, MessageService,{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

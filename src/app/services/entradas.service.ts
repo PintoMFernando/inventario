@@ -44,16 +44,19 @@ export class EntradasService {
 
     }
 
-    async editarEntradas(identrada:string,cantidad:number,precioentrada:number){
+    async editarEntradas(identrada:string,cantidad:number,precioentrada:number,nuevacantidad:number,tipo:number,idproducto:string){
 
       const jsondatos={
+        idproducto:idproducto,
         cantidad:cantidad,
-        precioentrada:precioentrada,
+        precioentrada:Number(precioentrada),
+       //nuevacantidad:nuevacantidad,
+        //tipo:tipo
 
       }
       console.log("es minjson",jsondatos)
        try{
-        return  await firstValueFrom(this.http.patch(`${this.baseUrl}/entrada/${identrada}`, jsondatos, { headers: this.headers }))
+        return  await firstValueFrom(this.http.patch(`${this.baseUrl}/entrada/${identrada}/${nuevacantidad}`, jsondatos, { headers: this.headers }))
        }catch(e){
          return e
        }
@@ -63,8 +66,8 @@ export class EntradasService {
 
     }
 
-    async eliminarEntrada(identrada:string){
-      return await this.http.delete(`${this.baseUrl}/entrada/${identrada}`).subscribe(
+    async eliminarEntrada(identrada:string,idproducto:string,cantidad:number){
+      return await this.http.delete(`${this.baseUrl}/entrada/${identrada}/${idproducto}/${cantidad}`).subscribe(
         () => {
           console.log('Entrada eliminada correctamente otrosuma');
         },

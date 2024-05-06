@@ -26,5 +26,11 @@ table.center {
     background-color: #45a049;
   }
   
+
+  .pi:hover {
+    color: rgb(255, 0, 0); /* Cambia el color del icono cuando el mouse está sobre él */
+    cursor: pointer; /* Cambia el cursor a un puntero */
+}
+
  
   

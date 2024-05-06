@@ -17,6 +17,7 @@ export class InformeComponent {
   currentDate: Date | undefined;
   minDate: Date | undefined;
   maxDate: Date | undefined;
+  fechaDeHoy = new Date().toLocaleDateString('es-ES');
 
   
   constructor(private config: PrimeNGConfig) {}
@@ -60,6 +61,9 @@ export class InformeComponent {
  
  
   onSubmit(){
+    console.log("aquie stan mis cosas bro?? fechas",this.fechafinal,this.fechainicio)
+    console.log("aquí están mis cosas bro?? fechas", this.fechafinal!.toISOString().slice(0, 10), this.fechainicio!.toISOString().slice(0, 10));
+
 
   }
 

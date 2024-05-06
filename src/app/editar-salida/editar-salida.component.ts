@@ -2,23 +2,26 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ModalserviceService } from '../services/modalservice.service';
-import { EntradasService } from '../services/entradas.service';
+import { SalidasService } from '../services/salidas.service';
 
 @Component({
-  selector: 'app-editar-entrada',
-  templateUrl: './editar-entrada.component.html',
-  styleUrls: ['./editar-entrada.component.css']
+  selector: 'app-editar-salida',
+  templateUrl: './editar-salida.component.html',
+  styleUrls: ['./editar-salida.component.css']
 })
-export class EditarEntradaComponent {
+export class EditarSalidaComponent {
+
+
   
-  identrada:string ="";
-  precioentrada:number =0;
+  idsalida:string ="";
+  preciototal:number =0;
+  preciosalida:number =0;
   cantidad:number =0;
   nombreproducto:string ="";
   stockinventario:number=0;
+  cantidaeditable:number=0;
+  idproducto:string ="";
    cantidadanterior:number=0;
-   tipo:number=0;
-   idproducto:string ="";
 
 
   
@@ -28,7 +31,7 @@ export class EditarEntradaComponent {
     private cdRef: ChangeDetectorRef, 
     private messageService: MessageService, 
     private modalService:ModalserviceService,
-    private entradasService: EntradasService,
+    private salidasService: SalidasService,
     private confirmationService: ConfirmationService, 
 
   )
@@ -43,28 +46,28 @@ export class EditarEntradaComponent {
   }
 
   async editarEntrada(){
-    this.identrada=this.ref.data.identrada;
-  this.precioentrada=this.ref.data.precioentrada;
+    this.idsalida=this.ref.data.idsalida;
+  this.preciototal=this.ref.data.preciototal;
+  this.preciosalida=this.ref.data.preciosalida;
   this.cantidad=this.ref.data.cantidad;
   this.nombreproducto=this.ref.data.nombreproducto;
-  this.stockinventario=this.ref.data.stockinventario
+  this.stockinventario= this.ref.data.stockInventario;
   this.cantidadanterior=this.ref.data.cantidad;
   this.idproducto=this.ref.data.idproducto;
-  console.log("asdasdasdasd",this.precioentrada)
-
+  console.log("alskndaksdnlaksdholaasholooos",this.idsalida)
   }
 
 
   async submitForm(){
     const diferenciacantidad=this.cantidad-this.cantidadanterior
-    
-   console.log("alskndaksdnlaksdholaas",this.cantidad,this.cantidadanterior,diferenciacantidad)
-    if(this.cantidad>this.cantidadanterior|| this.cantidad == this.cantidadanterior) //esta disminuyendo, aumentamos a inventario
+    console.log("alskndaksdnlaksdholaas",this.cantidad,this.cantidadanterior,diferenciacantidad,this.preciosalida)
+    if(this.cantidad>this.cantidadanterior || this.cantidad == this.cantidadanterior) //esta disminuyendo, aumentamos a inventario
     {
       const nuevacantidad=this.cantidad-this.cantidadanterior //nuevacantidad aumenta a producto
-      this.tipo=1 
+      //this.tipo=1 
       try {
-        const response = this.entradasService.editarEntradas(this.identrada,this.cantidad,this.precioentrada,nuevacantidad,this.tipo,this.idproducto)
+        const preciototal= this.preciosalida-this.cantidad
+        const response = this.salidasService.editarSalidas(this.idsalida,this.cantidad,preciototal,this.preciosalida,nuevacantidad,this.idproducto)
        // const response = this.productoService.patchProducto(this.miProducto[0].idproducto,formDataelectronicos)
         await this.messageService.add({ severity: 'info', summary: 'Confirmado!', detail: 'La Entra de Producto fue Editado Con exito' });
         await  this.modalService.closeModal();
@@ -87,10 +90,11 @@ export class EditarEntradaComponent {
      
 
         const nuevacantidad=this.cantidad-this.cantidadanterior //nuevacantidad disminuye a producto
-        this.tipo=2
+       // this.tipo=2
       
     try {
-      const response = this.entradasService.editarEntradas(this.identrada,this.cantidad,this.precioentrada,nuevacantidad,this.tipo,this.idproducto)
+      const preciototal= this.preciosalida-this.cantidad
+      const response = this.salidasService.editarSalidas(this.idsalida,this.cantidad,preciototal,this.preciosalida,nuevacantidad,this.idproducto)
      // const response = this.productoService.patchProducto(this.miProducto[0].idproducto,formDataelectronicos)
       await this.messageService.add({ severity: 'info', summary: 'Confirmado!', detail: 'La Entra de Producto fue Editado Con exito' });
       await  this.modalService.closeModal();
@@ -134,18 +138,14 @@ export class EditarEntradaComponent {
     
     
 
-   
-
-    
-    
-    
-
-
-
 
   }
   
 
-  
+  getPrecioTotal(precio:number,cantidad:number): number {
+    return precio * cantidad;
+  }
 
+  
+  
 }
