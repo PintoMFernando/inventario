@@ -6,11 +6,13 @@ import { ProductosComponent } from './productos/productos.component';
 import { EntradasalidaComponent } from './entradasalida/entradasalida.component';
 import { InformeComponent } from './informe/informe.component';
 import { NewproductComponent } from './newproduct/newproduct.component';
+import { AppComponent } from './app.component';
+import { ReporteimpComponent } from './reporteimp/reporteimp.component';
 
 
 
 
-const routes: Routes = [
+/*const routes: Routes = [
   // Ingreso
   { path: 'login', component: WelcomeComponent },
   { path: 'principal', component: PrincipalComponent },
@@ -22,7 +24,25 @@ const routes: Routes = [
  { path: '**', redirectTo: '' } // Redirecciona cualquier otra ruta a la principal
 
  // { path: '**', redirectTo: '/login' }
-];
+];*/
+const routes: Routes = [{
+  path:'',
+  component:AppComponent,
+  children:[
+    { path: 'login', component: WelcomeComponent },
+    { path: 'principal', component: PrincipalComponent },
+    { path: 'productos', component: ProductosComponent },
+    { path: 'entradasalida', component: EntradasalidaComponent },
+    { path: 'informe', component: InformeComponent },
+    { path: 'newproduct', component: NewproductComponent },
+    { path: 'reporteimp/:fechainicio/:fechafinal/:tiporeporte', component: ReporteimpComponent },
+   //{ path: '**', redirectTo: '' } // Redirecciona cualquier otra ruta a la principal
+  
+  
+ 
+  
+  ]
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

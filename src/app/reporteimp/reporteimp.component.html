@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de Impresión</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    margin: 20mm;
+    }
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .business-name {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .header-name {
+        margin-bottom: 20px;
+    }
+    .page-number {
+        text-align: right;
+    }
+    .content {
+        margin-bottom: 50px;
+    }
+    .product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 2px solid black; 
+    }
+
+    .product-table th, .product-table td {
+        border: none; /* Elimina todos los bordes de las celdas */
+        padding: 8px;
+    }
+
+    .product-table th {
+        border-left: 2px solid black; /* Conserva el borde izquierdo de las celdas del encabezado */
+    }
+
+    .product-table td {
+        border-left: 2px solid black; /* Conserva el borde izquierdo de las celdas de datos */
+    }
+
+    .product-table th:last-child, .product-table td:last-child {
+        border-right: 2px solid black; /* Conserva solo el borde derecho de la última columna */
+    }
+
+    .product-table tr:first-child th, .product-table tr:first-child td {
+        border-top: 2px solid black; /* Conserva solo el borde superior de la primera fila */
+    }
+
+    .product-table tr:last-child th, .product-table tr:last-child td {
+        border-bottom: 1px solid black; /* Conserva solo el borde inferior de la última fila */
+    }
+    .footer {
+        position: fixed;
+        bottom: 20px;
+      
+        width: 100%;
+        text-align: right;
+        font-weight: bold;
+    }
+    th {
+  border: 0px solid black;
+}
+
+.head-table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 2px solid black; /* Bordes externos */
+    }
+
+    .head-table th,
+    .head-table td {
+        padding: 8px;
+    }
+
+    .head-table tr {
+        border-bottom: 2px solid black; /* Líneas de las filas */
+    }
+
+    .head-table tr:last-child {
+        border-bottom: none; /* Elimina la línea de la última fila */
+    }
+</style>
+</head>
+<body>
+    <div class="header" >
+        <table class="head-table" style="border: 2;">
+        <tr>
+            <th style="vertical-align: bottom; width: 25%;"> 
+                <img src="assets/images/fotonegocio.jpg" alt="Descripción de la imagen" style="width: 30%;">
+            </th>
+            <th style="width: 50%; text-align: center; font-size: 20px;vertical-align: middle; ">Nombre del Negocio "IMPORTADORA N34" <br> REPORTE DE {{this.tiporeporte | uppercase}}</th>
+            <th style="width: 25%; vertical-align: middle;">FECHA: {{this.fechaDeHoy}}</th>
+        </tr>
+    
+    <tr>
+        <td colspan="3"><strong>  DE:</strong> {{this.fechainiciocorta}} <strong>A:</strong> {{this.fechafinalcorta}}</td>
+      </tr>
+    </table>
+    </div>
+    <div class="content">
+        <table class="product-table" style="border: 1;">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre Producto</th>
+                    <th>Cantidad</th>
+                    <th *ngIf="this.tiporeporte === 'salida'">Precio Unidad</th>
+                    <th>Precio Total</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+              
+                <tr *ngFor="let producto  of misdatos" >
+                    <td style="text-align: center; ">{{ producto.producto_codigo}}</td>
+           
+                    <td>{{ producto.producto_nombre}}</td>
+                    
+                    <td style="text-align: center; ">{{ producto.cantidadTotal }}</td>
+                    <td *ngIf="this.tiporeporte === 'salida'" style="text-align: center; ">{{ producto.producto_precio}}</td>
+                    <td style="text-align: center;">{{ producto.precioTotal }}</td>
+                    
+                    
+                    
+                </tr>
+                
+                
+            </tbody>
+        </table>
+    </div>
+    <div >
+        <table style="margin-left: 60%;">
+            <tr>
+                <td>
+                    <h3 style="letter-spacing: -1px;">Total Cantidad: {{this.totalcantidad}} </h3>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">
+                    <h3 style="letter-spacing: -1px;">Total Precio: BS. {{this.totalprecio}}</h3>
+                </td>
+            </tr>
+        </table>
+        
+        
+        
+        
+        
+    </div>
+    
+</body>
+
+<div id="page-number">Página: </div>
+
+
+</html>

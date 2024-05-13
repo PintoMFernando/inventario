@@ -43,7 +43,8 @@ import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
 import { EditarEntradaComponent } from './editar-entrada/editar-entrada.component';
 import { EditarSalidaComponent } from './editar-salida/editar-salida.component';
-
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ReporteimpComponent } from './reporteimp/reporteimp.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { EditarSalidaComponent } from './editar-salida/editar-salida.component';
     InformediarioComponent,
     EditarEntradaComponent,
     EditarSalidaComponent,
+    ReporteimpComponent,
   
     
   ],
@@ -91,7 +93,8 @@ import { EditarSalidaComponent } from './editar-salida/editar-salida.component';
     FileUploadModule,
     FormsModule,
     CommonModule, 
-    CarouselModule
+    CarouselModule,
+    RadioButtonModule
     
     
     

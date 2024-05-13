@@ -85,4 +85,10 @@
 
 
 
-  
+  .box-container {
+    display: flex;
+}
+
+.box {
+    margin-right: 10px; /* Ajusta el espacio entre los radio buttons */
+}

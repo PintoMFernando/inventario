@@ -1,7 +1,7 @@
+import { Entradas } from "./entradas.model";
+
 export class producto{
-    idotrossumas?: string;
-    observaciones?: string;
-    montootros?: string;
+   
 
     idproducto?: string;
         nombre?: string ;
@@ -12,6 +12,7 @@ export class producto{
         image?: string ;
         created_at?: Date ;
         updated_at?: Date;
+        entrada?: Entradas;
     
 
 }

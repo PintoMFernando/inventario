@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
+import { ReporteService } from '../services/reporte.service';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-informe',
@@ -12,6 +14,9 @@ export class InformeComponent {
   fechafinal: Date | undefined;
   panelItems: string[] = [];
   public es:any;
+  tiporeporte:string="entrada";
+  misdatos:any;
+  
 
 
   currentDate: Date | undefined;
@@ -20,7 +25,10 @@ export class InformeComponent {
   fechaDeHoy = new Date().toLocaleDateString('es-ES');
 
   
-  constructor(private config: PrimeNGConfig) {}
+  constructor(
+    private config: PrimeNGConfig,
+    public reporteService:ReporteService
+  ) {}
 
   ngOnInit() {
     this.es = {
@@ -60,10 +68,25 @@ export class InformeComponent {
 }
  
  
-  onSubmit(){
-    console.log("aquie stan mis cosas bro?? fechas",this.fechafinal,this.fechainicio)
-    console.log("aquí están mis cosas bro?? fechas", this.fechafinal!.toISOString().slice(0, 10), this.fechainicio!.toISOString().slice(0, 10));
+ async onSubmit(){
 
+  (await this.reporteService.reporteFecha(this.fechainicio!.toISOString().slice(0, 10),this.fechafinal!.toISOString().slice(0, 10),this.tiporeporte)).subscribe({
+    next: (data:any)=>{ 
+     
+      this.misdatos=data;
+      console.log("mis datos???",this.misdatos)
+
+  },
+    complete: () => { }, // completeHandler
+    error: (error) => { console.log('Este es el error', error)},    
+         
+});
+
+    console.log("aquie stan mis cosas bro?? fechas",this.fechafinal,this.fechainicio,this.tiporeporte)
+    //this.fechainicio=(this.fechainicio!.toISOString().slice(0, 10));
+    //this.fechafinal=this.fechafinal!.toISOString().slice(0, 10)
+    console.log("aquí están mis cosas bro?? fechas", this.fechafinal!.toISOString().slice(0, 10), this.fechainicio!.toISOString().slice(0, 10));
+   //  await this.reporteService.reporteFecha(this.fechainicio!.toISOString().slice(0, 10),this.fechafinal!.toISOString().slice(0, 10),this.tiporeporte)
 
   }
 

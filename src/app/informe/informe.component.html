@@ -25,9 +25,36 @@
           <div class="header">Fecha Final</div>
           <p-calendar [(ngModel)]="fechafinal" [showIcon]="true"></p-calendar>
         </div>
+       
+
+        <div class="box">
+          <p-radioButton 
+                  name="opcion" 
+                  value="entrada" 
+                  [(ngModel)]="tiporeporte" 
+                  inputId="entradaOption" />
+              <label for="entradaOption" class="ml-2">
+                  Entrada
+              </label>
+        </div>
+
+        <div class="box">
+          <p-radioButton 
+          name="opcion" 
+          value="salida" 
+          [(ngModel)]="tiporeporte" 
+          inputId="salidaOption" />
+      <label for="salidaOption" class="ml-2">
+          Salida
+      </label>
+        </div>
+       
+
+    
+      
 
         <div class="box-button">
-          <p-button (click)="onSubmit()">Generar Reporte</p-button>
+          <p-button [routerLink]="['/reporteimp', fechainicio?.toISOString(), fechafinal?.toISOString(),tiporeporte]">Generar Reporte</p-button>
         </div>
         
         
@@ -42,3 +69,4 @@
 
  
 
+  
