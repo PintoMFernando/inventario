@@ -28,8 +28,19 @@
     </td>
     <td>
         <div class="form-group" style="margin-left: 70px;">
-            <label for="precio"><strong>Precio Total:</strong> </label>
-            <input type="number" id="precio" name="precio"  min="0" step="0.01" [(ngModel)]="precioentrada" required>
+            <label for="precio"><strong>Precio Total: </strong> </label>
+            <input id="precio" name="precio"  min="0" step="0.01" [(ngModel)]="precioentrada" required>
+        </div>
+        
+    </td>
+    
+</tr>
+<tr>
+    <td colspan="2" align="center">
+        <div class="form-group" >
+            <label for="precio"><strong>Detalle:</strong> </label>
+            
+            <textarea type="number" id="detalle" name="detalle"  min="0" step="0.01" [(ngModel)]="detalle" required></textarea>
         </div>
         
     </td>

@@ -1,5 +1,5 @@
 <div class="panel">
-    <h3>Fecha: 04/03/2024</h3>
+    <h3>Fecha:{{this.fechaDeHoy}}</h3>
    
     <hr>
     <ul>
@@ -8,22 +8,71 @@
   </div>
   
 
+  <h2>Por Mes y Año</h2>
+
+
+
+   
 
 
 
 
-    <tr>
-        <div class="input-container">
-    Anio:<p-dropdown [options]="anios" [(ngModel)]="selectedAnio" optionLabel="anio"  placeholder="Seleccione Anio"></p-dropdown>
-    Mes:<p-dropdown [options]="mes" [(ngModel)]="selectedMes" optionLabel="mes"  placeholder="Seleccione Mes"></p-dropdown>
-    <p-button label="Generar Reporte"> <i class="pi pi-print" style="font-size: 1rem"></i> </p-button>
+
+ <div class="container-center">
+  
+ 
+  
+  
+  <div class="inner-container">
+   
+      <div class="box">
+        <div class="header">Año:</div>
+        <p-dropdown [options]="anios" [(ngModel)]="selectanio" optionLabel="anio"  placeholder="Seleccione Año"></p-dropdown>
+      </div>
+
+      <div class="box">
+        <div class="header"> Mes:</div>
+       <p-dropdown [options]="mes" [(ngModel)]="selectmes" optionLabel="mes"  placeholder="Seleccione Mes"></p-dropdown>
+      </div>
+     
+
+      <div class="box">
+        <p-radioButton 
+                name="opcion" 
+                value="entrada" 
+                [(ngModel)]="tiporeporte" 
+                inputId="entradaOption" />
+            <label for="entradaOption" class="ml-2">
+                Entrada
+            </label>
+      </div>
+
+      <div class="box">
+        <p-radioButton 
+        name="opcion" 
+        value="salida" 
+        [(ngModel)]="tiporeporte" 
+        inputId="salidaOption" />
+    <label for="salidaOption" class="ml-2">
+        Salida
+    </label>
+      </div>
+     
+
+  
     
+
+      <div class="box-button">
+        <p-button (click)="generarReporte(selectanio,selectmes,tiporeporte)" >Generar Reporte</p-button>
+      </div>
+      
+      
+     
+      
+  </div>
+  
+ 
+   
+ 
 </div>
-    
- </tr>
-
-
-
-
-
 

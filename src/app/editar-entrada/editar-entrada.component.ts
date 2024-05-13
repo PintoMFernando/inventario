@@ -19,6 +19,8 @@ export class EditarEntradaComponent {
    cantidadanterior:number=0;
    tipo:number=0;
    idproducto:string ="";
+   detalle:string ="";
+   
 
 
   
@@ -42,7 +44,7 @@ export class EditarEntradaComponent {
     
   }
 
-  async editarEntrada(){
+   editarEntrada(){
     this.identrada=this.ref.data.identrada;
   this.precioentrada=this.ref.data.precioentrada;
   this.cantidad=this.ref.data.cantidad;
@@ -50,6 +52,8 @@ export class EditarEntradaComponent {
   this.stockinventario=this.ref.data.stockinventario
   this.cantidadanterior=this.ref.data.cantidad;
   this.idproducto=this.ref.data.idproducto;
+  this.detalle=this.ref.data.detalle;
+  
   console.log("asdasdasdasd",this.precioentrada)
 
   }
@@ -64,7 +68,7 @@ export class EditarEntradaComponent {
       const nuevacantidad=this.cantidad-this.cantidadanterior //nuevacantidad aumenta a producto
       this.tipo=1 
       try {
-        const response = this.entradasService.editarEntradas(this.identrada,this.cantidad,this.precioentrada,nuevacantidad,this.tipo,this.idproducto)
+        const response = this.entradasService.editarEntradas(this.identrada,this.cantidad,this.precioentrada,nuevacantidad,this.tipo,this.idproducto,this.detalle)
        // const response = this.productoService.patchProducto(this.miProducto[0].idproducto,formDataelectronicos)
         await this.messageService.add({ severity: 'info', summary: 'Confirmado!', detail: 'La Entra de Producto fue Editado Con exito' });
         await  this.modalService.closeModal();
@@ -90,7 +94,7 @@ export class EditarEntradaComponent {
         this.tipo=2
       
     try {
-      const response = this.entradasService.editarEntradas(this.identrada,this.cantidad,this.precioentrada,nuevacantidad,this.tipo,this.idproducto)
+      const response = this.entradasService.editarEntradas(this.identrada,this.cantidad,this.precioentrada,nuevacantidad,this.tipo,this.idproducto,this.detalle)
      // const response = this.productoService.patchProducto(this.miProducto[0].idproducto,formDataelectronicos)
       await this.messageService.add({ severity: 'info', summary: 'Confirmado!', detail: 'La Entra de Producto fue Editado Con exito' });
       await  this.modalService.closeModal();

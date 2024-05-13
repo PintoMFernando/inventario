@@ -20,6 +20,7 @@ export class SalidasComponent {
   fechaDeHoy = new Date().toLocaleDateString('es-ES');
   allproductos:any;
   cantidadAComprar: number = 0;
+  descuento: number = 0;
   suscripcion: Subscription;
   mensaje: string = '';
   
@@ -75,7 +76,7 @@ export class SalidasComponent {
 
 
 
-  async agregarSalida(idproducto:string,precioProducto:number, cantidad:any, stockInventario:number){
+  async agregarSalida(idproducto:string,precioProducto:number, cantidad:any, stockInventario:number,descuento:number){
 
     console.log("aqui estan todas mis datos?",idproducto,precioProducto,cantidad,stockInventario)
     
@@ -96,7 +97,7 @@ export class SalidasComponent {
         
     });
     }else{
-      const preciototal= precioProducto*cantidad;
+      const preciototal= (precioProducto*cantidad)-descuento;
       
      await  this.confirmationService.confirm({
           
@@ -109,7 +110,7 @@ export class SalidasComponent {
         rejectLabel: 'No',
         rejectButtonStyleClass:"p-button-text",
         accept: async () => {
-           await this.salidasService.agregarSalidas(idproducto,precioProducto,cantidad,preciototal);
+           await this.salidasService.agregarSalidas(idproducto,precioProducto,cantidad,preciototal,descuento);
            await this.modalService.enviarMensaje('que se ejecute');
             this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'Se realizo una Salida con Exito' });
         },
@@ -125,8 +126,8 @@ export class SalidasComponent {
 
   }
 
-  getPrecioTotal(precio:number,cantidad:number): number {
-    return precio * cantidad;
+  getPrecioTotal(precio:number,cantidad:number,descuento:number): number {
+    return (precio * cantidad)-descuento;
   }
 
   async listarSalidas(){
@@ -151,11 +152,11 @@ export class SalidasComponent {
   }
 
 
-  async editarProducto(nombreproducto:string,idsalida:string,cantidad:number,preciototal:number,preciosalida:number,stockInventario:number,idproducto:string){
+  async editarProducto(nombreproducto:string,idsalida:string,cantidad:number,preciototal:number,preciosalida:number,stockInventario:number,idproducto:string,descuento:number){
 
     const data = {header: 'Editar Salida ',
-   width: '40%',
-   height: '50%',
+   width: '50%',
+   height: '65%',
    data:{
     nombreproducto:nombreproducto,
     idsalida:idsalida,
@@ -163,7 +164,8 @@ export class SalidasComponent {
     preciototal:preciototal,
     preciosalida:preciosalida,
     stockInventario:stockInventario,
-    idproducto:idproducto
+    idproducto:idproducto,
+    descuento:descuento,
    }}
 this.modalService.openModal(data,EditarSalidaComponent);
 

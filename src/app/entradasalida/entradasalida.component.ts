@@ -83,7 +83,7 @@ export class EntradasalidaComponent {
 
   
 
-  async agregarVenta(idproducto:string,nombreProducto:string,cantidad:any, precio:any){
+  async agregarVenta(idproducto:string,nombreProducto:string,cantidad:any, precio:any,detalle:string){
     console.log("que es esto??",idproducto,cantidad)
       this.confirmationService.confirm({
          // target: event.target as EventTarget,
@@ -96,7 +96,7 @@ export class EntradasalidaComponent {
           rejectLabel: 'No',
           rejectButtonStyleClass:"p-button-text",
           accept: async () => {
-              await this.entradasService.agregarEntradas(idproducto,cantidad,precio);
+              await this.entradasService.agregarEntradas(idproducto,cantidad,precio,detalle);
               await this.modalService.enviarMensaje('que se ejecute');
               await this.cdRef.detectChanges();
               this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'El Producto se Agrego hoy con Exito' });
@@ -131,18 +131,20 @@ export class EntradasalidaComponent {
   }
 
 
-  async editarProducto(nombreproducto:string,identrada:string,cantidad:number,precioentrada:number,stockinventario:number,idproducto:string){
-
+  async editarProducto(nombreproducto:string,identrada:string,cantidad:number,precioentrada:number,stockinventario:number,idproducto:string,detalle:string,preciototal:number){
+ console.log("auqie est ami prcioi totla??",preciototal)
     const data = {header: 'Editar Entrada ',
-   width: '40%',
-   height: '50%',
+   width: '50%',
+   height: '65%',
    data:{
     nombreproducto:nombreproducto,
     identrada:identrada,
     cantidad:cantidad,
     precioentrada:precioentrada,
     stockinventario:stockinventario,
-    idproducto:idproducto
+    idproducto:idproducto,
+    detalle:detalle,
+    preciototal:preciototal,
    }}
 this.modalService.openModal(data,EditarEntradaComponent);
 

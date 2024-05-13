@@ -38,16 +38,19 @@
            
             <table class="center">
                 <tr>
-                    <td>Producto: {{ product.nombre }}</td> 
+                    <td  colspan="3" align="center" ><strong>Producto:</strong> {{ product.nombre }}</td> 
                 </tr>
                 <tr>
-                  <td>Cantidad: <input type="number" style="width: 100px;" #cantidadInput></td>
+                  <td><strong>Cantidad: </strong><input type="number" style="width: 120px;" #cantidadInput></td>
+                  <td rowspan="2"><strong>Detalle:</strong> <textarea style="width: 200px;" #detalleInput></textarea></td>
+
                 </tr>
                 <tr>
-                    <td>Precio Total: <input type="number" style="width: 100px;" #precioInput></td>
+                    <td><strong>Precio Total: </strong><input type="number" style="width: 100px;" #precioInput></td>
+                    
                   </tr>
                 <tr>
-                  <td align="center" ><button (click)="agregarVenta(product.idproducto,product.nombre,cantidadInput.value,precioInput.value)" >Agregar</button></td>
+                  <td align="center" colspan="3"><button (click)="agregarVenta(product.idproducto,product.nombre,cantidadInput.value,precioInput.value,detalleInput.value)" >Agregar</button></td>
                 </tr>
               </table>
        
@@ -88,11 +91,11 @@
         <td>{{ entradas.identradas?.codigo }}</td>
         <td>{{ entradas.identradas?.nombre }}</td>
         <td>{{ entradas.cantidad }}</td>
-        <td>{{ entradas.identradas?.precio }}</td>
-        <td>{{ entradas.created_at }}</td>
+        <td>{{ entradas.precioentrada }}</td>
+        <td>{{ entradas.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
         <td>
         <span class="icon">
-            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(entradas.identradas?.nombre,entradas.identrada,entradas.cantidad,entradas.identradas?.precio,entradas.identradas?.stock,entradas.identradas?.idproducto )" title="Editar"></i>
+            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(entradas.identradas?.nombre, entradas.identrada, entradas.cantidad, entradas.precioentrada, entradas.identradas?.stock,entradas.identradas?.idproducto,entradas.detalle,entradas.precioentrada )" title="Editar"></i>
             <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(entradas.identrada,entradas.identradas?.nombre,entradas.identradas?.idproducto,entradas.cantidad )" title="Eliminar"></i>
         </span>
     </td>

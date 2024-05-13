@@ -38,18 +38,21 @@
            
     <table class="center">
         <tr>
-            <td  colspan="2" align="center">Producto: {{ product.nombre }}</td> 
+            <td   align="center"><strong>Producto:</strong> {{ product.nombre }}</td> 
+            <td><strong>Stock:</strong> {{product.stock}}</td>
         </tr>
         <tr>
-          <td>Cantidad en Iventario: {{product.stock}}</td>
-          <td>Precio Unidad:<input type="number" id="precio" name="precio"  min="0" step="0.01" [(ngModel)]="product.precio" style="width: 100px;" required></td>
+          
+          <td><strong>Precio Unidad:</strong>{{product.precio}}</td>
+          <td> <strong>Salida:</strong><input type="number" style="width: 100px;" [(ngModel)]="cantidadAComprar" ></td>
         </tr>
         <tr>
-            <td>Cantidad a Vender:<input type="number" style="width: 100px;" [(ngModel)]="cantidadAComprar" ></td>
-            <td>Precio Total: {{ getPrecioTotal(product.precio,cantidadAComprar) }}</td>
+            <td><strong>Precio Total:</strong> {{ getPrecioTotal(product.precio,cantidadAComprar,descuento) }}</td>
+            <td><strong>Descuento:</strong><input type="number" id="descuento" name="descuento"  min="0" step="0.01" style="width: 100px;"[(ngModel)]="descuento" ></td>
+            
           </tr>
         <tr>
-          <td colspan="2" align="center" ><button (click)="agregarSalida(product.idproducto,product.precio,cantidadAComprar,product.stock)" >Agregar</button></td>
+          <td colspan="2" align="center" ><button (click)="agregarSalida(product.idproducto,product.precio,cantidadAComprar,product.stock,descuento)" >Agregar</button></td>
         </tr>
       </table>
 
@@ -91,10 +94,10 @@
         <td>{{ salidas.idsalidas?.nombre }}</td>
         <td>{{ salidas.cantidad }}</td>
         <td>{{ salidas.preciototal }}</td>
-        <td>{{ salidas.created_at }}</td>
+        <td>{{ salidas.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
         <td>
         <span class="icon">
-            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(salidas.idsalidas?.nombre,salidas.idsalida,salidas.cantidad,salidas.preciototal,salidas.preciosalida,salidas.idsalidas?.stock,salidas.idproducto)" title="Editar"></i>
+            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(salidas.idsalidas?.nombre,salidas.idsalida,salidas.cantidad,salidas.preciototal,salidas.preciosalida,salidas.idsalidas?.stock,salidas.idproducto,salidas.descuento)" title="Editar"></i>
             <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(salidas.idsalida,salidas.identradas?.nombre,salidas.idproducto,salidas.cantidad)" title="Eliminar"></i>
         </span>
     </td>

@@ -15,13 +15,14 @@ export class EntradasService {
     private headers = { 'Content-Type': 'application/json' };
 
 
-    async agregarEntradas( idproducto:any,cantidadProducto:any,precio:any) {
+    async agregarEntradas( idproducto:any,cantidadProducto:any,precio:any, detalle:any) {
 
       const jsondatos={
         identrada:uuidv4(),
         idproducto:idproducto,
         cantidad:cantidadProducto,
         precioentrada:precio,
+        detalle:detalle,
 
       }
 
@@ -44,13 +45,13 @@ export class EntradasService {
 
     }
 
-    async editarEntradas(identrada:string,cantidad:number,precioentrada:number,nuevacantidad:number,tipo:number,idproducto:string){
+    async editarEntradas(identrada:string,cantidad:number,precioentrada:number,nuevacantidad:number,tipo:number,idproducto:string,detalle:string){
 
       const jsondatos={
         idproducto:idproducto,
         cantidad:cantidad,
         precioentrada:Number(precioentrada),
-       //nuevacantidad:nuevacantidad,
+       detalle:detalle
         //tipo:tipo
 
       }

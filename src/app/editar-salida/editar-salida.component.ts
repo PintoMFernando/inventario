@@ -22,6 +22,7 @@ export class EditarSalidaComponent {
   cantidaeditable:number=0;
   idproducto:string ="";
    cantidadanterior:number=0;
+   descuento:number=0;
 
 
   
@@ -54,6 +55,7 @@ export class EditarSalidaComponent {
   this.stockinventario= this.ref.data.stockInventario;
   this.cantidadanterior=this.ref.data.cantidad;
   this.idproducto=this.ref.data.idproducto;
+  this.descuento=this.ref.data.descuento;
   console.log("alskndaksdnlaksdholaasholooos",this.idsalida)
   }
 
@@ -142,8 +144,8 @@ export class EditarSalidaComponent {
   }
   
 
-  getPrecioTotal(precio:number,cantidad:number): number {
-    return precio * cantidad;
+  getPrecioTotal(precio:number,cantidad:number,descuento:number): number {
+    return (precio * cantidad)-descuento;
   }
 
   

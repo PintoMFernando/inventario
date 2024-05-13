@@ -16,14 +16,15 @@ export class SalidasService {
     private headers = { 'Content-Type': 'application/json' };
 
 
-    async agregarSalidas( idproducto:any,precioProducto:number,cantidad:any,preciototal:any) {
+    async agregarSalidas( idproducto:any,precioProducto:number,cantidad:any,preciototal:any,descuento:any) {
 
       const jsondatos={
         idsalida:uuidv4(),
         idproducto:idproducto,
         cantidad:cantidad,
         preciosalida: Number(precioProducto),
-        preciototal:preciototal
+        preciototal:preciototal,
+        descuento:descuento
 
       }
 

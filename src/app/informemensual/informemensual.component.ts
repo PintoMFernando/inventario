@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
@@ -8,16 +9,16 @@ import { DropdownModule } from 'primeng/dropdown';
 })
 export class InformemensualComponent {
   products!: any;
-
+  fechaDeHoy = new Date().toLocaleDateString('es-ES');
 
   panelItems: string[] = [];
   anios: any [] = [];
-  selectedAnio: string | undefined;
-
+  tiporeporte:string="entrada";
   mes: any [] = [];
-  selectedMes: string | undefined;
+  selectanio: string | undefined;
+  selectmes: string | undefined;
 
-
+  constructor(private router: Router) {}
   ngOnInit() {
     
 
@@ -59,6 +60,18 @@ export class InformemensualComponent {
 ];
 
     
+  }
+
+  generarReporte(anio:any,mes:any,tiporeporte:any){
+    console.log("asdasdsa",anio,mes,tiporeporte)
+    const anioStr = typeof anio === 'string' ? anio : anio.anio;
+    const mesStr = typeof mes === 'string' ? mes : mes.mes;
+    const tiporeporteStr = typeof tiporeporte === 'string' ? tiporeporte : tiporeporte.tiporeporte;
+
+    console.log("asdasdsa", anioStr, mesStr, tiporeporteStr);
+    this.router.navigate(['/reporteimpmesanio', anioStr, mesStr, tiporeporteStr]);
+ 
+
   }
 
 }

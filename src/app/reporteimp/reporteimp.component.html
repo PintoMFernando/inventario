@@ -117,6 +117,7 @@
                     <th>Nombre Producto</th>
                     <th>Cantidad</th>
                     <th *ngIf="this.tiporeporte === 'salida'">Precio Unidad</th>
+                    <th *ngIf="this.tiporeporte === 'salida'">Descuento</th>
                     <th>Precio Total</th>
                     
                 </tr>
@@ -130,6 +131,7 @@
                     
                     <td style="text-align: center; ">{{ producto.cantidadTotal }}</td>
                     <td *ngIf="this.tiporeporte === 'salida'" style="text-align: center; ">{{ producto.producto_precio}}</td>
+                    <td *ngIf="this.tiporeporte === 'salida'" style="text-align: center; ">{{ producto.descuentoTotal}}</td>
                     <td style="text-align: center;">{{ producto.precioTotal }}</td>
                     
                     
