@@ -46,6 +46,7 @@ import { EditarSalidaComponent } from './editar-salida/editar-salida.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ReporteimpComponent } from './reporteimp/reporteimp.component';
 import { ReporteimpmesanioComponent } from './reporteimpmesanio/reporteimpmesanio.component';
+import { ReporteimpdiaComponent } from './reporteimpdia/reporteimpdia.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { ReporteimpmesanioComponent } from './reporteimpmesanio/reporteimpmesani
     EditarSalidaComponent,
     ReporteimpComponent,
     ReporteimpmesanioComponent,
+    ReporteimpdiaComponent,
   
     
   ],

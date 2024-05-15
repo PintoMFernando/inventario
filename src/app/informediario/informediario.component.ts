@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
 export class InformediarioComponent {
   products!: any;
   panelItems: string[] = [];
+  fechaDeHoy = new Date().toLocaleDateString('es-ES');
+  fecha: Date | undefined;
+  tiporeporte:string="entrada";
+
   ngOnInit() {
     this.products = [
       { id: 1, nombre: 'Producto 1',codigo:'pc1' ,cantidad:10,precio: 10.99,total:5,fecha:'10/03/2024' },

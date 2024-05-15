@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReporteService } from '../services/reporte.service';
+import { ReportemesanioService } from '../services/reportemesanio.service';
 
 @Component({
   selector: 'app-reporteimpmesanio',
@@ -11,7 +12,7 @@ export class ReporteimpmesanioComponent {
 
   constructor(
     private route: ActivatedRoute,
-    public reporteService:ReporteService
+    public reporteaniomesService:ReportemesanioService
    
 
 ) {
@@ -19,6 +20,14 @@ export class ReporteimpmesanioComponent {
 tiporeporte:string="";
 mes:string="";
 anio:string="";
+misdatos:any;
+fechaDeHoy = new Date().toLocaleDateString('es-ES');
+totalprecio:number=0;
+totalcantidad:number=0;
+valorprecio:any;
+valorcantidad:any;
+meses:any;
+
 
 
   ngOnInit() { 
@@ -30,8 +39,80 @@ anio:string="";
     this.generarReporte();
   }
 
-  generarReporte(){
+  async generarReporte(){
+    if(this.tiporeporte == "entrada"){
+      await this.reporteaniomesService.traerEntradas(this.anio,this.mes).subscribe({
+        next: (data:any)=>{ 
+          
+          this.misdatos=data;
+          console.log("mis datos?asaasassas??asas",this.misdatos)
+          for (const producto of this.misdatos) {
+            this.valorprecio = Number(producto.precioTotal);
+            this.totalprecio = this.valorprecio+this.totalprecio
+            
+      
+            
+          }
+          for (const producto of this.misdatos) {
+            this.valorcantidad = Number(producto.cantidadTotal);
+            this.totalcantidad = this.valorcantidad+this.totalcantidad
+            
+      
+            
+          }
+      
+          
 
+
+      },
+        complete: () => { }, // completeHandler
+        error: (error) => { console.log('Este es el error', error)},    
+             
+      });
+    
+    
+    
+    
+    
+    
+    }else{
+      
+      await this.reporteaniomesService.traerSalidas(this.anio,this.mes).subscribe({
+        next: (data:any)=>{ 
+          
+          this.misdatos=data;
+          console.log("mis datos?asaasassas??asas salidas",this.misdatos)
+          for (const producto of this.misdatos) {
+            this.valorprecio = Number(producto.precioTotal);
+            this.totalprecio = this.valorprecio+this.totalprecio
+            
+      
+            console.log("mis datos?asasas??",producto.precioTotal)
+          }
+          for (const producto of this.misdatos) {
+            this.valorcantidad = Number(producto.cantidadTotal);
+            this.totalcantidad = this.valorcantidad+this.totalcantidad
+            
+      
+            
+          }
+      
+      },
+        complete: () => { }, // completeHandler
+        error: (error) => { console.log('Este es el error', error)},    
+             
+      });
+
+      
+    }
+    
+
+  }
+
+  obtenerNombreMes(numero: any): string {
+    const fecha = new Date(2024, numero - 1); // Restamos 1 porque en JavaScript los meses empiezan en 0
+    const nombreMes = fecha.toLocaleString('default', { month: 'long' });
+    return nombreMes;
   }
 
 }

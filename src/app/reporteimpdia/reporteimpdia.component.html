@@ -105,7 +105,7 @@
         </tr>
     
     <tr>
-        <td colspan="3"><strong> Año:</strong> {{this.anio}} <strong>Mes:</strong> {{obtenerNombreMes(this.mes)}}</td>
+        <td colspan="3"><strong>  En Fecha:</strong> {{this.fechacorta}} </td>
       </tr>
     </table>
     </div>
@@ -115,6 +115,8 @@
                 <tr>
                     <th>Codigo</th>
                     <th>Nombre Producto</th>
+                    <th *ngIf="this.tiporeporte === 'entrada'">Detalle</th>
+                    <th >Hora</th>
                     <th>Cantidad</th>
                     <th *ngIf="this.tiporeporte === 'salida'">Precio Unidad</th>
                     <th *ngIf="this.tiporeporte === 'salida'">Descuento</th>
@@ -128,7 +130,10 @@
                     <td style="text-align: center; ">{{ producto.producto_codigo}}</td>
            
                     <td>{{ producto.producto_nombre}}</td>
-                    
+                    <td *ngIf="this.tiporeporte === 'entrada'" style="text-align: center; ">{{ producto.entrada_detalle}}</td>
+                    <td style="text-align: center; " *ngIf="this.tiporeporte === 'entrada'">{{ producto.entrada_created_at | date: 'HH:mm:ss' }}</td>
+                    <td style="text-align: center; " *ngIf="this.tiporeporte === 'salida'">{{ producto.salida_created_at | date: 'HH:mm:ss'}}</td>
+
                     <td style="text-align: center; ">{{ producto.cantidadTotal }}</td>
                     <td *ngIf="this.tiporeporte === 'salida'" style="text-align: center; ">{{ producto.producto_precio}}</td>
                     <td *ngIf="this.tiporeporte === 'salida'" style="text-align: center; ">{{ producto.descuentoTotal}}</td>
