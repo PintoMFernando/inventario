@@ -1,0 +1,35 @@
+<div class="form-container">
+
+
+  <div *ngIf="estado === 2" class="alert alert-warning">
+    <h2> Ya existe un Formulario Proforma</h2>
+  </div>
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" formControlName="nombre" type="text" class="form-control" />
+      <div *ngIf="formulario.controls['nombre'].invalid && formulario.controls['nombre'].touched" class="error">
+        El nombre es requerido.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="ci">CI</label>
+      <input id="ci" formControlName="ci" type="text" class="form-control" />
+      <div *ngIf="formulario.controls['ci'].invalid && formulario.controls['ci'].touched" class="error">
+        El CI es requerido y debe ser numérico.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" formControlName="telefono" type="text" class="form-control" />
+      <div *ngIf="formulario.controls['telefono'].invalid && formulario.controls['telefono'].touched" class="error">
+        El teléfono es requerido y debe tener 10 dígitos.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Generar Proforma</button>
+  </form>
+</div>

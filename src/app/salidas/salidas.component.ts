@@ -5,7 +5,10 @@ import { SalidasService } from '../services/salidas.service';
 import { ModalserviceService } from '../services/modalservice.service';
 import { Subscription } from 'rxjs';
 import { EditarSalidaComponent } from '../editar-salida/editar-salida.component';
-
+import { FormGroup } from '@angular/forms';
+import { ProformaComponent } from '../proforma/proforma.component';
+import { ProformaService } from '../services/proforma.service';
+import { v4 as uuidv4 } from 'uuid';
 @Component({
   selector: 'app-salidas',
   templateUrl: './salidas.component.html',
@@ -23,6 +26,11 @@ export class SalidasComponent {
   descuento: number = 0;
   suscripcion: Subscription;
   mensaje: string = '';
+  estado:any;
+  selecestado: string | undefined;
+  idsalida:string="" ;
+  stateOptions: any[] = [{ label: 'Valido', value: '1' },{ label: 'Anulado', value: '2' }];
+    value: string = '1';
   
   constructor(
     
@@ -32,6 +40,7 @@ export class SalidasComponent {
     private productoService: ProductoService,
     private cdRef: ChangeDetectorRef,
     private salidasService: SalidasService,
+    private prtoformaService: ProformaService,
     private modalService: ModalserviceService
   ) {
     this.suscripcion = this.modalService.obtenerMensaje().subscribe((mensaje) => {
@@ -43,7 +52,10 @@ export class SalidasComponent {
     console.log(mensaje);
     });}
 
+   
+
   ngOnInit() {
+   
 
     this.traerProductos();
     this.listarSalidas();
@@ -110,7 +122,9 @@ export class SalidasComponent {
         rejectLabel: 'No',
         rejectButtonStyleClass:"p-button-text",
         accept: async () => {
-           await this.salidasService.agregarSalidas(idproducto,precioProducto,cantidad,preciototal,descuento);
+          this.idsalida=uuidv4();
+           await this.salidasService.agregarSalidas(this.idsalida,idproducto,precioProducto,cantidad,preciototal,descuento);
+           await this.prtoformaService.agregarProforma(this.idsalida)
            await this.modalService.enviarMensaje('que se ejecute');
             this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'Se realizo una Salida con Exito' });
         },
@@ -201,6 +215,61 @@ this.modalService.openModal(data,EditarSalidaComponent);
     
  
    }
+
+
+
+
+   async proforma(idsalida:string,estado:number,nombre:string,ci:string,telefono:number){
+ console.log("esta pasando??",nombre)
+    const data = {header: 'Formulario Proforma ',
+   width: '50%',
+   height: '65%',
+   data:{
+    
+    idsalida:idsalida,
+    estado:estado,
+    nombre:nombre,
+    ci:ci,
+    telefono:telefono,
+  
+   }}
+this.modalService.openModal(data,ProformaComponent);
+
+
+
+
+
+
+  }
+
+
+  getEstadoText(estado: number | null | undefined): string {
+    switch (estado) {
+      case 1:
+        return 'Normal';
+      case 2:
+        return 'Válido';
+      case 3:
+        return 'Anulado';
+      default:
+        return 'Desconocido'; // Opcional, por si hay otro valor que no se espere
+    }
+  }
+  
+  getSeverity(estado: number | null | undefined): string {
+    switch (estado) {
+      case 1:
+        return 'info'; // Puedes ajustar esto según tu preferencia
+      case 2:
+        return 'success';
+      case 3:
+        return 'danger';
+      default:
+        return 'warning'; // Opcional, por si hay otro valor que no se espere
+    }
+  }
+
+
        
 
 

@@ -19,3 +19,23 @@ footer {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+ 
+.icon-container {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .small-select-button .p-button {
+    font-size: 0.65rem !important; /* Ajusta el tamaño de la fuente */
+    padding: 0.65rem 0.32rem !important; /* Ajusta el padding para reducir el tamaño del botón */
+    position: relative;
+  overflow: hidden;
+    
+  }
+  
+  .small-select-button .p-button-label {
+    font-size: 0.65rem !important; /* Ajusta el tamaño de la etiqueta */
+  }
+  

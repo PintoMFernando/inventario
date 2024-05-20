@@ -83,6 +83,7 @@
         <th>Precio Total</th>
         <th>Fecha</th>
         <th>Opciones</th>
+        <th>Proforma</th>
 
         
     </tr>
@@ -99,8 +100,22 @@
         <span class="icon">
             <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(salidas.idsalidas?.nombre,salidas.idsalida,salidas.cantidad,salidas.preciototal,salidas.preciosalida,salidas.idsalidas?.stock,salidas.idproducto,salidas.descuento)" title="Editar"></i>
             <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(salidas.idsalida,salidas.identradas?.nombre,salidas.idproducto,salidas.cantidad)" title="Eliminar"></i>
+
         </span>
     </td>
+    <td>
+        <span class="icon-container">
+          <i class="pi pi-file-o" style="font-size: 1rem; color: rgb(63, 73, 216); margin-right: 5px;" (click)="proforma(salidas.idsalida,salidas.proformas?.estado,salidas.proformas?.nombre,salidas.proformas?.ci,salidas.proformas?.telefono)" title="Eliminar"></i>
+          <p-tag 
+          [value]="getEstadoText(salidas.proformas?.estado)" 
+          [severity]="getSeverity(salidas.proformas?.estado)">
+        </p-tag>
+        
+        </span>
+      </td>
+      
+      
+      
 </ng-template>
     
 </p-table>

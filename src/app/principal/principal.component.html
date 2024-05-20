@@ -20,6 +20,21 @@
               
             </div>
           </div>
+
+
+          <div class="icono-panel" (click)="toggleOptions2()">
+            <i class="pi pi-briefcase"></i> Administrar
+            <div *ngIf="showOptions2" class="opciones">
+             
+              <div (click)="mostrarVista('vista8')">&nbsp;&nbsp;<i class="pi pi-angle-right"></i>Adm.Entradas </div>
+              <div (click)="mostrarVista('vista10')">&nbsp;&nbsp;<i class="pi pi-angle-right"></i>Adm.Salidas</div>
+              <div (click)="mostrarVista('vista9')">&nbsp;&nbsp;<i class="pi pi-angle-right"></i>Adm. Proformas</div>
+              
+              
+            </div>
+          </div>
+
+          
           
           
           <div (click)="mostrarVista('vista4')" class="icono-panel"><i class="pi pi-user"></i> Perfil</div>
@@ -41,6 +56,9 @@
         <app-informemensual *ngIf="vista === 'vista5'"></app-informemensual>
         <app-informediario *ngIf="vista === 'vista7'"></app-informediario>
         <app-salidas *ngIf="vista === 'vista6'"></app-salidas>
+        <app-adminentradassalidas *ngIf="vista === 'vista8'"></app-adminentradassalidas>
+        <app-adminproforma *ngIf="vista === 'vista9'"></app-adminproforma>
+        <app-adminsalidas *ngIf="vista === 'vista10'"></app-adminsalidas>
     </ng-template>
 
    

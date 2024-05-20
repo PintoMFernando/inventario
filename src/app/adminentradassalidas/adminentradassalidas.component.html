@@ -1,0 +1,52 @@
+
+<p-table #dt1 [value]="entradas" [paginator]="true" [rows]="3" [globalFilterFields]="['nombre','codigo']" [tableStyle]="{ 'min-width': '68rem' }">
+    <ng-template pTemplate="caption">
+      <div class="header-row">
+        <div class="header">Año:</div>
+        <p-dropdown [options]="anios" [(ngModel)]="selectanio" optionLabel="anio" optionValue="value" placeholder="Seleccione Año"></p-dropdown>
+        <div class="header">Mes:</div>
+        <p-dropdown [options]="mes" [(ngModel)]="selectmes" optionLabel="mes" optionValue="value" placeholder="Seleccione Mes"></p-dropdown>
+        <button (click)="buscar(selectanio,selectmes)" style="width: 70px;">Buscar</button>
+
+        <div class="search-container">
+          <span class="p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"  placeholder="Búsqueda" />
+          </span>
+        </div>
+      </div>
+    </ng-template>
+  
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Código</th>
+        <th pSortableColumn="nombre">Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio Total</th>
+        <th>Fecha</th>
+        <th>Opciones</th>
+      </tr>
+    </ng-template>
+  
+    <ng-template pTemplate="body" let-entrada>
+      <tr>
+        <td>{{ entrada.producto_codigo }}</td>
+        <td>{{ entrada.producto_nombre }}</td>
+        <td>{{ entrada.entrada_cantidad }}</td>
+        <td>{{ entrada.entrada_precioentrada }}</td>
+        <td>{{ entrada.entrada_created_at
+            | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>
+            <span class="icon">
+              <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" 
+                 (click)="editarProducto(entrada.producto_nombre, entrada.entrada_identrada, entrada.entrada_cantidad, 
+                 entrada.entrada_precioentrada, entrada.producto_stock, entrada.producto_idproducto, 
+                 entrada.entrada_detalle, entrada.entrada_precioentrada )" title="Editar"></i>
+              <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" 
+                 (click)="eliminar(entrada.entrada_identrada, entrada.producto_nombre, entrada.producto_idproducto, 
+                 entrada.entrada_cantidad )" title="Eliminar"></i>
+            </span>
+          </td>
+      </tr>
+    </ng-template>
+  </p-table>

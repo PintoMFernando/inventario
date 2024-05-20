@@ -1,5 +1,5 @@
 <div class="panel">
-  <h3>Fecha: 04/03/2024</h3>
+  <h3>Fecha: {{this.fechaDeHoy}}</h3>
  
   <hr>
   <ul>
@@ -31,13 +31,13 @@
 <div>
 <div class="cuadro">
     <div class="mitad verde">
-      <i class="pi pi-user icono"></i>
+      <i class="pi pi-shopping-cart icono"></i>
     </div>
     <div class="mitad rojo">
       <section class="layout">
         <div class="contenido">
-          <span class="numero">10</span>
-          <span class="nombre">Usuarios</span>
+          <span class="numero">{{this.misdatosInicio?.cantidadProductos?.cantidadProductos}}</span>
+          <span class="nombre">Productos </span>
         </div>
       </section>
     </div>
@@ -47,13 +47,14 @@
   <div>
     <div class="cuadro">
         <div class="mitad celeste">
-          <i class="pi pi-shopping-cart icono"></i>
+          <i class="pi pi-cart-plus icono"></i>
         </div>
         <div class="mitad rojo">
           <section class="layout">
             <div class="contenido">
-              <span class="numero">10</span>
-              <span class="nombre">Productos</span>
+              <span class="numero">{{ this.misdatosInicio?.cantidadEntradas?.cantidadEntradas !== null ? this.misdatosInicio?.cantidadEntradas?.cantidadEntradas : 0 }}
+              </span>
+              <span class="nombre">Entradas</span>
             </div>
           </section>
         </div>
@@ -71,8 +72,8 @@
             <div class="mitad rojo">
               <section class="layout">
                 <div class="contenido">
-                  <span class="numero">10</span>
-                  <span class="nombre">Ventas</span>
+                  <span class="numero">{{this.misdatosInicio?.cantidadSalidas?.cantidadSalidas !== null ? this.misdatosInicio?.cantidadSalidas?.cantidadSalidas : 0 }}</span>
+                  <span class="nombre">Salidas</span>
                 </div>
               </section>
             </div>
@@ -87,53 +88,53 @@
 
 <div style="display: flex; flex-direction: row;">
   <div style="margin-right: 20px;">
-    <h4>  <i class="pi pi-th-large"></i> PRODUCTOS MAS VENDIDOS</h4>
+    <h4>  <i class="pi pi-th-large"></i>PRODUCTOS AÑADIDOS RECIENTEMENTE</h4>
     
-    <p-table #dt2 [value]="salidas" [tableStyle]="{ 'min-width': '15rem' , 'border': '1px solid #948b8b59' }" [rows]="2" [globalFilterFields]="['nombre','codigo']">
+    <p-table #dt2 [value]="misdatosInicio?.ultimosTresProductos" [tableStyle]="{ 'min-width': '15rem' , 'border': '1px solid #948b8b59' }" [rows]="3" [globalFilterFields]="['nombre','codigo']">
       <ng-template pTemplate="header">
         <tr>
-          <th>Nombre</th>
-          <th pSortableColumn="nombre">Total Vendido</th>
-          <th>Cantidad</th>
+          <th pSortableColumn="nombre">Nombre</th>
+          <th pSortableColumn="precio">Precio</th>
+          <th pSortableColumn="stock">Stock</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-salidas>
+      <ng-template pTemplate="body" let-producto>
         <tr>
-          <td>{{ salidas.nombre }}</td>
-          <td>{{ salidas.precio }}</td>
-          <td>{{ salidas.cantidad }}</td>
+          <td>{{ producto.nombre  }}</td>
+          <td>{{ producto.precio  }}</td>
+          <td>{{ producto.stock }}</td>
         </tr>
       </ng-template>
     </p-table>
   </div>
   
   <div style="margin-right: 20px;">
-    <h4> <i class="pi pi-th-large"></i> ULTIMAS VENTAS</h4>
-    <p-table #dt2 [value]="salidas" [tableStyle]="{ 'min-width': '15rem' , 'border': '1px solid #948b8b59'}" [rows]="2" [globalFilterFields]="['nombre','codigo']">
+    <h4> <i class="pi pi-th-large"></i> ULTIMAS ENTRADAS</h4>
+    <p-table #dt2 [value]="misdatosInicio?.ultimasTresEntradas" [tableStyle]="{ 'min-width': '15rem' , 'border': '1px solid #948b8b59'}" [rows]="3" [globalFilterFields]="['nombre','codigo']">
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
-          <th pSortableColumn="nombre">Total Vendido</th>
+          <th pSortableColumn="nombre">Precio</th>
           <th>Cantidad</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-salidas>
+      <ng-template pTemplate="body" let-entradas>
         <tr>
-          <td>{{ salidas.nombre }}</td>
-          <td>{{ salidas.precio }}</td>
-          <td>{{ salidas.cantidad }}</td>
+          <td>{{ entradas.nombre }}</td>
+          <td>{{ entradas.precio }}</td>
+          <td>{{ entradas.stock }}</td>
         </tr>
       </ng-template>
     </p-table>
   </div>
   
   <div>
-    <h4> <i class="pi pi-th-large"></i> PRODUCTOS AÑADIDOS RECIENTEMENTE</h4>
-    <p-table #dt2 [value]="salidas" [tableStyle]="{ 'min-width': '15rem', 'border': '1px solid #948b8b59' }" [rows]="2" [globalFilterFields]="['nombre','codigo']">
+    <h4> <i class="pi pi-th-large"></i> ULTIMAS SALIDAS</h4>
+    <p-table #dt2 [value]="misdatosInicio?.ultimasTresSalidas" [tableStyle]="{ 'min-width': '15rem', 'border': '1px solid #948b8b59' }" [rows]="3" [globalFilterFields]="['nombre','codigo']">
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
-          <th pSortableColumn="nombre">Total Vendido</th>
+          <th pSortableColumn="nombre">Precio</th>
           <th>Cantidad</th>
         </tr>
       </ng-template>
@@ -141,7 +142,7 @@
         <tr>
           <td>{{ salidas.nombre }}</td>
           <td>{{ salidas.precio }}</td>
-          <td>{{ salidas.cantidad }}</td>
+          <td>{{ salidas.stock }}</td>
         </tr>
       </ng-template>
     </p-table>

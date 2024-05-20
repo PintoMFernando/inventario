@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { v4 as uuidv4 } from 'uuid';
+import { producto } from '../models/producto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,16 @@ export class SalidasService {
     private headers = { 'Content-Type': 'application/json' };
 
 
-    async agregarSalidas( idproducto:any,precioProducto:number,cantidad:any,preciototal:any,descuento:any) {
+    async agregarSalidas( idsalida:string,idproducto:any,precioProducto:number,cantidad:any,preciototal:any,descuento:any) {
 
       const jsondatos={
-        idsalida:uuidv4(),
+        idsalida:idsalida,
         idproducto:idproducto,
         cantidad:cantidad,
         preciosalida: Number(precioProducto),
         preciototal:preciototal,
-        descuento:descuento
+        descuento:descuento,
+        proforma: 1,
 
       }
 
@@ -46,6 +48,13 @@ export class SalidasService {
 
 
     }
+    async traerSalidasFecha(anio:number,mes:number){
+   console.log("asdasd",anio,mes)
+      return this.http.get<producto>(`${this.baseUrl}/salida/admfechaaniomessalida/${anio}/${mes}`);
+  
+  }
+
+
 
     async editarSalidas(idsalida:string,cantidad:number,preciototal:number,preciosalida:number,nuevacantidad:number,idproducto:string){
       
@@ -81,6 +90,11 @@ export class SalidasService {
 
     }
    
+
+    traerunaSalida(isdalida:string): Observable<producto> {
+      return this.http.get<producto>(`${this.baseUrl}/salida/proformaimp/${isdalida}`);
+      
+     }
 
 
 

@@ -33,4 +33,33 @@ table.center {
 }
 
  
-  
+.icon-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.small-select-button .p-button {
+  font-size: 0.20rem !important; /* Ajusta el tamaño de la fuente */
+  padding: 0.20rem 0.32rem !important; /* Ajusta el padding para reducir el tamaño del botón */
+}
+
+.small-select-button .p-button-label {
+  font-size: 0.20rem !important; /* Ajusta el tamaño de la etiqueta */
+}
+
+
+/* tu-componente.component.css */
+.tag-valido {
+  background-color: green;
+  color: white;
+}
+
+.tag-anulado {
+  background-color: red;
+  color: white;
+}
+
+.tag-otro {
+  background-color: grey;
+  color: white;
+}

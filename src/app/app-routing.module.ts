@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { ReporteimpComponent } from './reporteimp/reporteimp.component';
 import { ReporteimpmesanioComponent } from './reporteimpmesanio/reporteimpmesanio.component';
 import { ReporteimpdiaComponent } from './reporteimpdia/reporteimpdia.component';
+import { ProformaimpComponent } from './proformaimp/proformaimp.component';
 
 
 
@@ -40,6 +41,7 @@ const routes: Routes = [{
     { path: 'reporteimp/:fechainicio/:fechafinal/:tiporeporte', component: ReporteimpComponent },
     { path: 'reporteimpmesanio/:selectanio/:selectmes/:tiporeporte', component:ReporteimpmesanioComponent},
     { path: 'reporteimpdia/:fecha/:tiporeporte', component:ReporteimpdiaComponent},
+    { path: 'proforma/:idsalida/:nombre/:ci/:telefono', component:ProformaimpComponent},
      
    //{ path: '**', redirectTo: '' } // Redirecciona cualquier otra ruta a la principal
   

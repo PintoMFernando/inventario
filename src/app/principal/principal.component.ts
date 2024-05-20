@@ -62,11 +62,16 @@ export class PrincipalComponent {
 
 
   showOptions: boolean = false;
+  showOptions2: boolean = false;
 
  
 
   toggleOptions() {
     this.showOptions = !this.showOptions;
+  }
+
+  toggleOptions2() {
+    this.showOptions2 = !this.showOptions2;
   }
 
   opcion1() {

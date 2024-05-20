@@ -136,4 +136,16 @@ verProducto(idproducto:string): Observable<producto>{
 }
 
 
+
+
+
+traerdatosInicio(fecha:any): Observable<producto> {
+  return this.http.get<producto>(`${this.baseUrl}/producto/datosinicio/${fecha}`);
+  
+ }
+
+
+
+
+
 }

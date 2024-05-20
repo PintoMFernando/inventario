@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrincipalComponent } from './principal/principal.component';
@@ -47,6 +47,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ReporteimpComponent } from './reporteimp/reporteimp.component';
 import { ReporteimpmesanioComponent } from './reporteimpmesanio/reporteimpmesanio.component';
 import { ReporteimpdiaComponent } from './reporteimpdia/reporteimpdia.component';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ProformaComponent } from './proforma/proforma.component';
+import { ProformaimpComponent } from './proformaimp/proformaimp.component';
+import { AdminentradassalidasComponent } from './adminentradassalidas/adminentradassalidas.component';
+import { AdminproformaComponent } from './adminproforma/adminproforma.component';
+import { AdminsalidasComponent } from './adminsalidas/adminsalidas.component';
 
 
 @NgModule({
@@ -70,6 +76,11 @@ import { ReporteimpdiaComponent } from './reporteimpdia/reporteimpdia.component'
     ReporteimpComponent,
     ReporteimpmesanioComponent,
     ReporteimpdiaComponent,
+    ProformaComponent,
+    ProformaimpComponent,
+    AdminentradassalidasComponent,
+    AdminproformaComponent,
+    AdminsalidasComponent,
   
     
   ],
@@ -98,7 +109,9 @@ import { ReporteimpdiaComponent } from './reporteimpdia/reporteimpdia.component'
     FormsModule,
     CommonModule, 
     CarouselModule,
-    RadioButtonModule
+    RadioButtonModule,
+    SelectButtonModule,
+    ReactiveFormsModule
     
     
     
