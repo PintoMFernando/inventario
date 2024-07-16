@@ -1,0 +1,76 @@
+<p-treeTable [value]="files" 
+    [scrollable]="true"  
+    [paginator]="true"
+    [rows]="2"
+    [tableStyle]="{'min-width':'50rem'}">
+    
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>CI</th>
+            <th>Fecha de Creación</th>
+            <th>Editar</th>
+            <th>Estado</th>
+        </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <ng-container *ngIf="rowData.idproforma">
+            <tr [ttRow]="rowNode">
+                <td>
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    {{ rowData.codigo }}
+                </td>
+                <td>{{ rowData.nombre }}</td>
+                <td>{{ rowData.ci }}</td>
+                <td>{{ formatearFecha(rowData.created_at) }}</td>
+                <td>
+                    <i class="pi pi-pencil" 
+                       style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" 
+                       (click)="editarProforma(rowData.idproforma, rowData.nombre, rowData.ci, rowData.telefono, rowData.estado)" 
+                       title="Editar">
+                    </i>
+                    <i class="pi pi-file" 
+                       style="font-size: 1rem;color: rgb(80, 82, 218); margin-right: 5px;" 
+                       (click)="generarProforma(rowData.idproforma)" 
+                       title="Proforma">
+                    </i>
+                </td>
+                <td>
+                    <span class="icon-container">
+                        <p-tag 
+                            [value]="getEstadoText(rowData.estado)" 
+                            [severity]="getSeverity(rowData.estado)">
+                        </p-tag>
+                    </span>
+                </td>
+            </tr>
+        </ng-container>
+        
+        <ng-container *ngIf="rowData.idsalida">
+            <tr [ttRow]="rowNode">
+                <td><strong> Producto:</strong> {{ rowData.producto?.nombre }}</td>
+                <td><strong>Cantidad: </strong> {{ rowData.cantidad }}</td>
+                <td><strong>Precio Salida:</strong> {{ rowData.preciosalida }}</td>
+                <td><strong>Precio Total:</strong> {{ rowData.preciototal }}</td>
+                <td><strong>Descuento:</strong> {{ rowData.descuento }}</td>
+                <td>
+                    <strong>Opc:</strong> 
+                    <span *ngIf="rowNode.parent?.data.estado !== 2">
+                        <i class="pi pi-pencil" 
+                           style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" 
+                           (click)="editarSalida(rowData.producto?.nombre, rowData.idsalida, rowData.cantidad, rowData.preciototal, rowData.preciosalida, rowData.producto?.stock, rowData.idproducto, rowData.descuento,rowData.idstockproducto)" 
+                           title="Editar">
+                        </i>
+                        <i class="pi pi-trash" 
+                           style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" 
+                           (click)="eliminarSalida(rowData.idsalida, rowData.producto?.nombre, rowData.idproducto, rowData.cantidad)" 
+                           title="Eliminar">
+                        </i>
+                    </span>
+                </td>
+            </tr>
+        </ng-container>
+    </ng-template>
+</p-treeTable>

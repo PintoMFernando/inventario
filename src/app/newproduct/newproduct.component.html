@@ -3,13 +3,13 @@
     <form (ngSubmit)="submitForm()">
         <div class="form-group">
             <label for="nombre">Nombre del Producto:</label>
-            <input type="text" id="nombre" name="nombre" [(ngModel)]="producto.nombre" required>
+            <input type="text" id="nombre" name="nombre" [(ngModel)]="producto.nombre" class="uppercase-input" (input)="onInputChange($event, producto.nombre)"  required>
         </div>
          <tr>
             <th>
         <div class="form-group">
             <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" [(ngModel)]="producto.descripcion" required></textarea>
+            <textarea id="descripcion" name="descripcion" [(ngModel)]="producto.descripcion" class="uppercase-input" (input)="onInputChange($event, producto.descripcion)"required></textarea>
         </div>
     </th>
    

@@ -74,13 +74,14 @@ export class AdminsalidasComponent {
     { mes: 'Diciembre', value: 12 },
    
 ];
-
+this.selectanio = this.anios[0].value;
+  this.selectmes = this.mes[0].value;
     
   }
 
   
   async listarSalidas(){
-    (await this.salidasService.traerSalidas()).subscribe({
+ /*   (await this.salidasService.traerSalidas()).subscribe({
       next: (data:any)=>{ 
        
         this.salidas=data;
@@ -97,7 +98,7 @@ export class AdminsalidasComponent {
   await this.salidas.forEach((producto:any, index:any) => {
     producto.posicion = index + 1;
   });
-
+*/
   }
 
 
@@ -205,8 +206,13 @@ getSeverity(estado: number | null | undefined): string {
 
 async buscar(anio:any,mes:any){
   console.log("hola mis mes y anio",anio, mes)
-  await this.cdRef.detectChanges();
-   (await this.salidasService.traerSalidasFecha(anio,mes)).subscribe({
+  if (!anio || !mes) {
+    console.error('Año o mes no definidos');
+    return;
+  }
+ // await this.cdRef.detectChanges();
+ await this.cdRef.markForCheck();  
+ (await this.salidasService.traerSalidasFecha(anio,mes)).subscribe({
     next: (data:any)=>{ 
      
       if(data!==null){
@@ -222,11 +228,12 @@ async buscar(anio:any,mes:any){
          
 });
 
-await this.cdRef.detectChanges();
+//await this.cdRef.detectChanges();
 await this.salidas.forEach((producto:any, index:any) => {
   producto.posicion = index + 1;
 });
-await this.cdRef.detectChanges();
+//await this.cdRef.detectChanges();
+await this.cdRef.markForCheck();
   }
 
 

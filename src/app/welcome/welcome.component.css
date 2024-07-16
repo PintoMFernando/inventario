@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #7992ac; /* Color de fondo del contenedor principal */
+    background-color: #101836; /* Color de fondo del contenedor principal */
   }
   
   .login-form {
@@ -58,3 +58,22 @@
     background-color: #0056b3;
   }
   
+
+  .logo-container {
+    display: grid;
+    place-items: center; /* Centra la imagen dentro del contenedor */
+    height: 140px; /* Ajusta el tamaño del contenedor según sea necesario */
+  }
+  
+  .logo-container img {
+    max-width: 100%; /* Ajusta la imagen al contenedor manteniendo la proporción */
+    max-height: 100%; /* Ajusta la imagen al contenedor manteniendo la proporción */
+  }
+  
+
+  .footer {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #777;
+    text-align: center; /* Centra el texto dentro del pie de página */
+  }

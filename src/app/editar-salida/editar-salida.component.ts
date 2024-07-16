@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ModalserviceService } from '../services/modalservice.service';
 import { SalidasService } from '../services/salidas.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-editar-salida',
@@ -23,7 +24,7 @@ export class EditarSalidaComponent {
   idproducto:string ="";
    cantidadanterior:number=0;
    descuento:number=0;
-
+   idstockproducto:string="";
 
   
 
@@ -47,16 +48,25 @@ export class EditarSalidaComponent {
   }
 
   async editarEntrada(){
-    this.idsalida=this.ref.data.idsalida;
-  this.preciototal=this.ref.data.preciototal;
-  this.preciosalida=this.ref.data.preciosalida;
-  this.cantidad=this.ref.data.cantidad;
-  this.nombreproducto=this.ref.data.nombreproducto;
-  this.stockinventario= this.ref.data.stockInventario;
-  this.cantidadanterior=this.ref.data.cantidad;
-  this.idproducto=this.ref.data.idproducto;
-  this.descuento=this.ref.data.descuento;
+    
   console.log("alskndaksdnlaksdholaasholooos",this.idsalida)
+  this.idsalida= this.ref.data.idsalida;
+
+  
+
+  const source$ = this.salidasService.traerunaSalidaEditar(this.idsalida); //con esto traigo el id
+  const data:any = await lastValueFrom(source$);
+  this.stockinventario=data.idstockproductos.stock
+  this.preciototal=data.preciototal;
+  this.preciosalida=data.preciosalida;
+  this.cantidad=data.cantidad;
+  this.nombreproducto=data.idsalidas.nombre;
+  this.cantidadanterior=this.ref.data.cantidad;
+  this.idproducto=data.idproducto;
+  this.descuento=data.descuento;
+  this.idstockproducto= this.ref.data.idstockproducto;
+
+  console.log("estan mis datos??????",data)
   }
 
 
@@ -73,7 +83,8 @@ export class EditarSalidaComponent {
        // const response = this.productoService.patchProducto(this.miProducto[0].idproducto,formDataelectronicos)
         await this.messageService.add({ severity: 'info', summary: 'Confirmado!', detail: 'La Entra de Producto fue Editado Con exito' });
         await  this.modalService.closeModal();
-        await this.modalService.enviarMensaje('que se ejecute');
+        //await this.modalService.enviarMensaje('que se ejecute');
+        await this.modalService.enviarMensajeSalidas('que se ejecute');
         console.log('Respuesta del backend:', response);
         // Aquí puedes manejar la respuesta del backend, por ejemplo, mostrar un mensaje al usuario
       } catch (error) {
@@ -147,6 +158,7 @@ export class EditarSalidaComponent {
   getPrecioTotal(precio:number,cantidad:number,descuento:number): number {
     return (precio * cantidad)-descuento;
   }
+
 
   
   

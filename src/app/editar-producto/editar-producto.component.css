@@ -59,3 +59,24 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+.file-upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 9vh; /* Ajusta según tu necesidad */
+  }
+
+
+
+  td .form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.uppercase-input {
+    text-transform: uppercase;
+  }

@@ -16,7 +16,7 @@
     
         <th style="flex-grow: 1; display: flex; justify-content: center; font-size: 40px;">
  
-            ENTRADAS
+            INGRESOS
         </th>
     
        
@@ -54,7 +54,7 @@
             <div class="contenido">
               <span class="numero">{{ this.misdatosInicio?.cantidadEntradas?.cantidadEntradas !== null ? this.misdatosInicio?.cantidadEntradas?.cantidadEntradas : 0 }}
               </span>
-              <span class="nombre">Entradas</span>
+              <span class="nombre">Ingresos</span>
             </div>
           </section>
         </div>
@@ -109,7 +109,7 @@
   </div>
   
   <div style="margin-right: 20px;">
-    <h4> <i class="pi pi-th-large"></i> ULTIMAS ENTRADAS</h4>
+    <h4> <i class="pi pi-th-large"></i> ULTIMOS INGRESOS</h4>
     <p-table #dt2 [value]="misdatosInicio?.ultimasTresEntradas" [tableStyle]="{ 'min-width': '15rem' , 'border': '1px solid #948b8b59'}" [rows]="3" [globalFilterFields]="['nombre','codigo']">
       <ng-template pTemplate="header">
         <tr>

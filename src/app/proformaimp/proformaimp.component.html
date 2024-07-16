@@ -1,1 +1,123 @@
-<p>proformaimp works!</p>
+<div class="container1">
+  <div class="container">
+    <div class="header">
+      <div>
+        <img src="assets/images/fotonegocio.jpg" alt="Descripción de la imagen" style="width: 15%;">
+      </div>
+      <div class="title">
+        Proforma
+        <div class="sub-title">
+          Original
+        </div>
+       
+        <div class="extra-content">
+          <p><strong>Cod:</strong> {{ datosproforma.codigo }}</p>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="details">
+      <p><strong>Fecha:</strong> {{ this.fechaDeHoy }}</p>
+      <p><strong>Cliente:</strong> {{this.datosproforma.nombre}}</p>
+      <p><strong>Telefono:</strong> {{this.datosproforma.telefono}}</p>
+      <p><strong>CI:</strong> {{this.datosproforma.ci}}</p>
+    </div>
+ 
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Codigo</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Descuento</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of datosproforma.salidas">
+          <td>{{item.idsalidas?.nombre}} </td>
+          <td>{{item.idsalidas?.codigo}} </td>
+          <td>{{item.cantidad}} </td>
+          <td>{{item.preciosalida}} </td>
+          <td>{{item.descuento}} </td>
+          <td>{{item.preciototal}} </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="footer">
+      <p><strong>Subtotal:</strong> {{sumaPreciosalida}}</p>
+      <p><strong>Descuento:</strong>  {{sumadesceunto}} </p>
+      <p><strong>Total:</strong> {{sumaTotal}} </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="container1">
+  <div class="container">
+    <div class="header">
+      <div>
+        <img src="assets/images/fotonegocio.jpg" alt="Descripción de la imagen" style="width: 15%;">
+      </div>
+      <div class="title">
+        Proforma
+        <div class="sub-title1">
+          Copia
+        </div>
+       
+        <div class="extra-content">
+          <p><strong>Cod:</strong> {{ datosproforma.codigo }}</p>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="details">
+      <p><strong>Fecha:</strong> {{ this.fechaDeHoy }}</p>
+      <p><strong>Cliente:</strong> {{this.datosproforma.nombre}}</p>
+      <p><strong>Telefono:</strong> {{this.datosproforma.telefono}}</p>
+      <p><strong>CI:</strong> {{this.datosproforma.ci}}</p>
+    </div>
+ 
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Codigo</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Descuento</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of datosproforma.salidas">
+          <td>{{item.idsalidas?.nombre}} </td>
+          <td>{{item.idsalidas?.codigo}} </td>
+          <td>{{item.cantidad}} </td>
+          <td>{{item.preciosalida}} </td>
+          <td>{{item.descuento}} </td>
+          <td>{{item.preciototal}} </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="footer">
+      <p><strong>Subtotal:</strong> {{sumaPreciosalida}}</p>
+      <p><strong>Descuento:</strong>  {{sumadesceunto}} </p>
+      <p><strong>Total:</strong> {{sumaTotal}} </p>
+    </div>
+  </div>
+</div>
+<div *ngIf="tipoproforma === 2"  class="watermark">ANULADO</div>

@@ -4,12 +4,12 @@
         <p><strong>Nombre:</strong>{{dat.nombre}} </p>
         <p><strong>Código:</strong> {{dat.codigo}}  </p>
         <p><strong>Descripción:</strong> {{dat.descripcion}}  </p>
-        <p><strong>Fecha de Creación:</strong> {{dat.created_at}}  </p>
+        <p><strong>Fecha de Creación:</strong> {{formatearFecha(dat.created_at)}}  </p>
         <p><strong>Precio:</strong> {{dat.precio}}  </p>
       </div>
       <div class="product-image">
-        <img *ngIf="nombreImage !== null"  [src]="urlImage+nombreImage" alt="Imagen del Producto" width="100" class="imagen-con-contorno">
-        <img *ngIf="nombreImage === null" src="assets/images/SINFOTO.jpg" alt="Imagen Alternativa" width="100" class="imagen-con-contorno">
+        <img *ngIf="nombreImage !== null"  [src]="urlImage+nombreImage" alt="Imagen del Producto" width="150" class="imagen-con-contorno">
+        <img *ngIf="nombreImage === null" src="assets/images/SINFOTO.jpg" alt="Imagen Alternativa" width="150" class="imagen-con-contorno">
         
       </div>
     </div>

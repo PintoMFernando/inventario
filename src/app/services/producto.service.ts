@@ -41,6 +41,29 @@ export class ProductoService {
     }
     }
 
+    async createstockproducto( precio:any,descripcion:any,codigo:any,stock:any,idproducto:string) {
+      
+      const jsondatos={
+        idstockproducto:uuidv4(),
+        descripcion:descripcion,
+        precio:precio,
+        codigo:codigo,
+        stock:stock,
+        idproducto:idproducto
+        
+
+      }
+     
+    
+      console.log("entra als erviceeeeeeee",jsondatos);
+      try{
+      return  await firstValueFrom(this.http.post(`${this.baseUrl}/stockproducto`, jsondatos))
+      }catch(e){
+      return e
+      }
+      }
+
+
 
     async traerProductos(){
 
@@ -49,6 +72,26 @@ export class ProductoService {
 
 
     }
+
+    
+
+  buscarsubprodcuto(idproducto:string, precio:number): Observable<producto>{
+    console.log("que es exacaamnte esto??", idproducto)
+    return this.http.get<producto>(`${this.baseUrl}/stockproducto/buscarsubproducto/${idproducto}/${precio}`).pipe(
+     catchError((error)=>{
+       console.log('Error desde el servicio',error)
+       return throwError(() => error);
+     })
+    )
+    
+    }
+
+
+
+
+
+
+    
    
 
 
@@ -57,6 +100,19 @@ export class ProductoService {
      console.log("es minjson",datos)
       try{
        return  await firstValueFrom(this.http.patch(`${this.baseUrl}/producto/${idproducto}`, datos, { headers: this.headers }))
+      }catch(e){
+        return e
+      }
+    
+    
+    }
+
+
+    async patchstockProducto(idstockproducto:string,datos:any) {
+      
+     console.log("es minjson",datos)
+      try{
+       return  await firstValueFrom(this.http.patch(`${this.baseUrl}/stockproducto/${idstockproducto}`, datos, { headers: this.headers }))
       }catch(e){
         return e
       }
@@ -111,6 +167,18 @@ verProducto(idproducto:string): Observable<producto>{
     
     }
 
+    editarsubProducto(idstockproducto:string): Observable<producto>{
+      console.log("que es exacaamnte esto??", idstockproducto)
+      return this.http.get<producto>(`${this.baseUrl}/stockproducto/unsubproducto/${idstockproducto}`).pipe(
+       catchError((error)=>{
+         console.log('Error desde el servicio',error)
+         return throwError(() => error);
+       })
+      )
+      
+      }
+
+
 
     
   async cantidadProductos(): Promise<number> {
@@ -134,6 +202,22 @@ verProducto(idproducto:string): Observable<producto>{
  );;
 
 }
+
+
+async deletesubProducto(idstockproducto:string){
+  //importante manejar el subscribe para eliminar
+  console.log(idstockproducto);
+return await this.http.delete(`${this.baseUrl}/stockproducto/${idstockproducto}`).subscribe(
+ () => {
+   console.log('producto eliminada correctamente');
+ },
+ (error) => {
+   console.error('Error al eliminar el prpoducto', error);
+ }
+);;
+
+}
+
 
 
 

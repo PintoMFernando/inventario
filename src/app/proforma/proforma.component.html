@@ -8,7 +8,7 @@
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="nombre">Nombre</label>
-      <input id="nombre" formControlName="nombre" type="text" class="form-control" />
+      <input id="nombre" formControlName="nombre" type="text" class="form-control"  class="uppercase-input" (input)="onInputChange($event)" />
       <div *ngIf="formulario.controls['nombre'].invalid && formulario.controls['nombre'].touched" class="error">
         El nombre es requerido.
       </div>

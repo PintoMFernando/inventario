@@ -53,6 +53,12 @@ export class VerProductoComponent {
   }
 
  
+  formatearFecha(fecha: string): string {
+    // Formato de la fecha deseado (YYYY-MM-DD HH:mm:ss)
+    const partes = fecha.split('T');
+    const fechaFormateada = partes[0] + ' ' + partes[1].split('.')[0]; // Elimina los milisegundos
+    return fechaFormateada;
+  }
 
 
 }

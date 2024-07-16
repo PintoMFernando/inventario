@@ -1,0 +1,43 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="container">
+  <!-- Sección superior para el botón de descarga -->
+  <div class="top-section">
+      <button class="export-button" (click)="descargarDatos()">
+          <i class="pi pi-download"></i> Descargar Datos
+      </button>
+  </div>
+
+
+    <!-- Sección inferior para el componente p-fileUpload -->
+
+
+    <!--
+    <div class="bottom-section">
+      <div class="upload-container">
+        <div class="file-upload-wrapper">
+          <p-fileUpload 
+            name="demo[]"
+            chooseLabel="Seleccionar"
+            uploadLabel="Subir Archivo"
+            cancelLabel="Cancelar"
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            (onUpload)="onUpload($event)" 
+            [multiple]="true" 
+            accept=".zip" 
+          >
+            <ng-template pTemplate="content">
+              <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">
+                  {{ file.name }} - {{ file.size }} bytes
+                </li>
+              </ul>
+            </ng-template>
+          </p-fileUpload>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+  

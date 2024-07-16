@@ -33,7 +33,7 @@ import { TagModule } from 'primeng/tag';
 import { InicioComponent } from './inicio/inicio.component';
 
 import { TreeModule } from 'primeng/tree';
-
+import { TreeTableModule } from 'primeng/treetable';
 import { MenuModule } from 'primeng/menu';
 import { InformemensualComponent } from './informemensual/informemensual.component';
 import { InformediarioComponent } from './informediario/informediario.component';
@@ -53,8 +53,17 @@ import { ProformaimpComponent } from './proformaimp/proformaimp.component';
 import { AdminentradassalidasComponent } from './adminentradassalidas/adminentradassalidas.component';
 import { AdminproformaComponent } from './adminproforma/adminproforma.component';
 import { AdminsalidasComponent } from './adminsalidas/adminsalidas.component';
+import { EditarProformaComponent } from './editar-proforma/editar-proforma.component';
 
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { AdminComponent } from './admin/admin.component';
+import { CreateadminComponent } from './createadmin/createadmin.component';
+import { EditaradminComponent } from './editaradmin/editaradmin.component';
+import { PanelDerechoComponent } from './panel-derecho/panel-derecho.component';
+import { PanelinferiorSalidaComponent } from './panelinferior-salida/panelinferior-salida.component';
 
+import { EditarsubproductoComponent } from './editarsubproducto/editarsubproducto.component';
+import { BackupComponent } from './backup/backup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +90,14 @@ import { AdminsalidasComponent } from './adminsalidas/adminsalidas.component';
     AdminentradassalidasComponent,
     AdminproformaComponent,
     AdminsalidasComponent,
+    EditarProformaComponent,
+    AdminComponent,
+    CreateadminComponent,
+    EditaradminComponent,
+    PanelDerechoComponent,
+    PanelinferiorSalidaComponent,
+    EditarsubproductoComponent,
+    BackupComponent,
   
     
   ],
@@ -111,7 +128,9 @@ import { AdminsalidasComponent } from './adminsalidas/adminsalidas.component';
     CarouselModule,
     RadioButtonModule,
     SelectButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ConfirmPopupModule,
+    TreeTableModule
     
     
     

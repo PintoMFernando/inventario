@@ -9,6 +9,8 @@ import { FormGroup } from '@angular/forms';
 import { ProformaComponent } from '../proforma/proforma.component';
 import { ProformaService } from '../services/proforma.service';
 import { v4 as uuidv4 } from 'uuid';
+import { Router } from '@angular/router';
+import { PanelesService } from '../services/paneles.service';
 @Component({
   selector: 'app-salidas',
   templateUrl: './salidas.component.html',
@@ -25,13 +27,17 @@ export class SalidasComponent {
   cantidadAComprar: number = 0;
   descuento: number = 0;
   suscripcion: Subscription;
+ 
   mensaje: string = '';
   estado:any;
   selecestado: string | undefined;
   idsalida:string="" ;
   stateOptions: any[] = [{ label: 'Valido', value: '1' },{ label: 'Anulado', value: '2' }];
     value: string = '1';
-  
+    datosParaEnviar: string ="holos gato";
+
+    selectedPrecio: number =0;
+    selectedStock: number =0;
   constructor(
     
     private confirmationService: ConfirmationService, 
@@ -41,16 +47,26 @@ export class SalidasComponent {
     private cdRef: ChangeDetectorRef,
     private salidasService: SalidasService,
     private prtoformaService: ProformaService,
-    private modalService: ModalserviceService
+    private modalService: ModalserviceService,
+    private router: Router,
+    private panelesService: PanelesService,
   ) {
     this.suscripcion = this.modalService.obtenerMensaje().subscribe((mensaje) => {
-    //  console.log("concluye el mensaje");
-    this.listarSalidas();
-    this.traerProductos();
+      console.log("entra a mi tabla productos???x");
+      this.cantidadAComprar=0;
+      this.descuento=0;
+      this.getStock(mensaje,this.cantidadAComprar,this.descuento)
+      this.onCantidadChange(mensaje)
+   // this.listarSalidas();
+    //this.traerProductos();
     this.cdRef.detectChanges();
     this.mensaje = mensaje;
     console.log(mensaje);
-    });}
+    });
+
+    
+  
+  }
 
    
 
@@ -58,7 +74,7 @@ export class SalidasComponent {
    
 
     this.traerProductos();
-    this.listarSalidas();
+    //this.listarSalidas();
     
 
    
@@ -72,6 +88,11 @@ export class SalidasComponent {
        
         this.allproductos=data;
         console.log("aqui estan todos mis datos salidas",this.allproductos)
+
+        if (this.allproductos.stockproductos.length > 0) {
+          this.selectedPrecio = this.allproductos.stockproductos[0].precio;
+          this.selectedStock = 0; // Suponiendo que el índice del primer producto es 0
+        }
         
     
     },
@@ -88,10 +109,12 @@ export class SalidasComponent {
 
 
 
-  async agregarSalida(idproducto:string,precioProducto:number, cantidad:any, stockInventario:number,descuento:number){
+  async agregarSalida(idproducto:string,precioProducto:number, cantidad:any, stockInventario:number,descuento:number,nombre:string,idstockproducto:string){
 
-    console.log("aqui estan todas mis datos?",idproducto,precioProducto,cantidad,stockInventario)
     
+    precioProducto=this.selectedPrecio 
+    console.log("aqui estan todas mis datos?",idproducto,precioProducto,cantidad,stockInventario)
+    console.log("MI STOCK",stockInventario)
     if(cantidad > stockInventario){
       this.confirmationService.confirm({
           
@@ -123,9 +146,21 @@ export class SalidasComponent {
         rejectButtonStyleClass:"p-button-text",
         accept: async () => {
           this.idsalida=uuidv4();
-           await this.salidasService.agregarSalidas(this.idsalida,idproducto,precioProducto,cantidad,preciototal,descuento);
-           await this.prtoformaService.agregarProforma(this.idsalida)
-           await this.modalService.enviarMensaje('que se ejecute');
+          const datos = {
+            nombre:nombre,
+            idsalida: this.idsalida,
+            idproducto: idproducto,
+            precioProducto: precioProducto,
+            cantidad:cantidad,
+            preciototal:preciototal,
+            descuento:descuento,
+            idstockproducto:idstockproducto
+          };
+          await this.panelesService.enviarDatos(datos);
+          //await this.salidasService.agregarSalidas(this.idsalida,idproducto,precioProducto,cantidad,preciototal,descuento); //esperar para mandar a la db
+          //await this.router.navigate(['/proforma', this.idsalida,nombre,ci,telefono]);
+          // await this.prtoformaService.agregarProforma(this.idsalida)
+           //await this.modalService.enviarMensaje('actualizar pagina');
             this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'Se realizo una Salida con Exito' });
         },
         reject: () => {
@@ -141,11 +176,29 @@ export class SalidasComponent {
   }
 
   getPrecioTotal(precio:number,cantidad:number,descuento:number): number {
+    console.log("esto es precio y cantidad",precio,cantidad)
     return (precio * cantidad)-descuento;
   }
 
+  getStock(idproducto:string,stock:number,cantidad:number): any {
+    
+      console.log("es el stock mens laa cantidad",stock,cantidad)
+      return (stock - cantidad);
+   
+    
+  }
+
+  onCantidadChange(idproducto:string){
+  console.log("entraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadadad",idproducto)
+    const producto = this.allproductos.find((p:any)=> p.idproducto === idproducto);
+    //if(producto){
+      return producto.cantidadvista=0;
+    //}
+
+  }
+
   async listarSalidas(){
-    (await this.salidasService.traerSalidas()).subscribe({
+   /* (await this.salidasService.traerSalidas()).subscribe({
       next: (data:any)=>{ 
        
         this.salidas=data;
@@ -162,7 +215,7 @@ export class SalidasComponent {
   await this.salidas.forEach((producto:any, index:any) => {
     producto.posicion = index + 1;
   });
-
+*/
   }
 
 
@@ -219,7 +272,7 @@ this.modalService.openModal(data,EditarSalidaComponent);
 
 
 
-   async proforma(idsalida:string,estado:number,nombre:string,ci:string,telefono:number){
+   async proforma(idsalida:string,estado:number,nombre:string,ci:string,telefono:number,idproforma:string){
  console.log("esta pasando??",nombre)
     const data = {header: 'Formulario Proforma ',
    width: '50%',
@@ -231,6 +284,7 @@ this.modalService.openModal(data,EditarSalidaComponent);
     nombre:nombre,
     ci:ci,
     telefono:telefono,
+    idproforma:idproforma
   
    }}
 this.modalService.openModal(data,ProformaComponent);
@@ -270,8 +324,36 @@ this.modalService.openModal(data,ProformaComponent);
   }
 
 
-       
+  formatearFecha(fecha: string): string {
+    // Formato de la fecha deseado (YYYY-MM-DD HH:mm:ss)
+    const partes = fecha.split('T');
+    const fechaFormateada = partes[0] + ' ' + partes[1].split('.')[0]; // Elimina los milisegundos
+    return fechaFormateada;
+  }
 
 
+
+  manejarDatosEnviados(datos: any) {
+    // Aquí puedes realizar cualquier acción con los datos recibidos del componente hijo
+    console.log('Datos recibidos en el componente padre:', datos);
+  }
+
+  onPrecioChange(event: any) {
+    console.log("MI evet",    event)
+    this.selectedPrecio = event.target.value;
+  
+    this.selectedStock = event.target.selectedIndex-1;
+
+    console.log("mi precio seleccionado y mi estock seleccionado",    this.selectedPrecio,this.selectedStock )
+    
+    return  this.selectedPrecio,this.selectedStock
+    
+  }
+  calcularVIsta(precio: number) {
+    
+
+  }
+
+  
 
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component,ChangeDetectionStrategy, OnInit, } from '@angular/core';
 import { ModalserviceService } from '../services/modalservice.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -12,15 +12,16 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-adminentradassalidas',
   templateUrl: './adminentradassalidas.component.html',
-  styleUrls: ['./adminentradassalidas.component.css']
+  styleUrls: ['./adminentradassalidas.component.css'],
+ // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminentradassalidasComponent {
+export class AdminentradassalidasComponent implements OnInit{
 
   
   products!: any;
-  entradas!: any;
-  mes:any;
-  anios:any;
+  entradas: any[] = [];
+  mes: any[] = []; 
+  anios: any[] = [];
   algo:string ="";
   suscripcion: Subscription;
   mensaje: string = '';
@@ -39,9 +40,10 @@ export class AdminentradassalidasComponent {
     
   ) {
     this.suscripcion = this.modalService.obtenerMensaje().subscribe((mensaje) => {
-      //  console.log("concluye el mensaje");
+        console.log("concluye el mensaje");
       
       this.cdRef.detectChanges();
+      //this.cdRef.markForCheck();
       this.mensaje = mensaje;
       console.log(mensaje);
       });
@@ -94,7 +96,8 @@ export class AdminentradassalidasComponent {
      
   ];
       
-  
+  this.selectanio = this.anios[0].value;
+  this.selectmes = this.mes[0].value;
       
     
    
@@ -106,6 +109,7 @@ export class AdminentradassalidasComponent {
 
   async agregarVenta(idproducto:string,nombreProducto:string,cantidad:any, precio:any,detalle:string){
     console.log("que es esto??",idproducto,cantidad)
+    const precioTotal=cantidad*precio;
       this.confirmationService.confirm({
          // target: event.target as EventTarget,
           message: 'Esta Seguro de Agregar '+ cantidad + ' unidades de ' + nombreProducto+'?',
@@ -117,7 +121,7 @@ export class AdminentradassalidasComponent {
           rejectLabel: 'No',
           rejectButtonStyleClass:"p-button-text",
           accept: async () => {
-              await this.entradasService.agregarEntradas(idproducto,cantidad,precio,detalle);
+              await this.entradasService.agregarEntradas(idproducto,cantidad,precio,detalle,precioTotal);
               await this.modalService.enviarMensaje('que se ejecute');
               await this.cdRef.detectChanges();
               this.messageService.add({ severity: 'info', summary: 'Confirmado!!', detail: 'El Producto se Agrego hoy con Exito' });
@@ -183,8 +187,14 @@ this.modalService.openModal(data,EditarEntradaComponent);
 
   }
 
-  async buscar(anio:any,mes:any){
+  async buscar(anio: any | undefined, mes: any | undefined){
+    console.error("este es mi anio y mes",anio,mes);
+    if (!anio || !mes) {
+      console.error('Año o mes no definidos');
+      return;
+    }
   this.algo="gooloo";
+  // this.cdRef.markForCheck();
   await this.cdRef.detectChanges();
    (await this.entradasService.traerEntradasFecha(anio,mes)).subscribe({
     next: (data:any)=>{ 
@@ -199,10 +209,11 @@ this.modalService.openModal(data,EditarEntradaComponent);
          
 });
 
-await this.cdRef.detectChanges();
+//await this.cdRef.detectChanges();
 await this.entradas.forEach((producto:any, index:any) => {
   producto.posicion = index + 1;
 });
+//await this.cdRef.markForCheck();
 await this.cdRef.detectChanges();
   }
 

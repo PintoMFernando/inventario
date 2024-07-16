@@ -31,4 +31,18 @@ table.center {
     cursor: pointer; /* Cambia el cursor a un puntero */
 }
 
-  
+.uppercase-input {
+  text-transform: uppercase;
+}
+
+
+.container {
+  max-width: 100%; /* Ocupa todo el ancho disponible */
+  margin: 0 auto; /* Centra el div horizontalmente */
+  padding: 10px; /* Añade espacio interno al contenido */
+  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  overflow-x: auto; /* Permite desplazamiento horizontal si el contenido es demasiado ancho */
+}
+
+
+

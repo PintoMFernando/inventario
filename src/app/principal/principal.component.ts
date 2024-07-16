@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeIcons, MenuItem } from 'primeng/api';
 
 @Component({
@@ -18,12 +19,31 @@ export class PrincipalComponent {
     { label: 'Opción 2', icon: 'pi pi-fw pi-users', command: () => this.opcion2() }
   ];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   vista: string = ''; // Variable para controlar la vista mostrada en el segundo panel
+  username: string="";
+  rol: string="";
+
+  ngOnInit(): void {
+    // Obtener los parámetros de la ruta
+    this.route.params.subscribe(params => {
+      // Extraer los valores de los parámetros
+      this.username = params['username'];
+      this.rol = params['rol'];
+    });
+
+    
+  }
 
   mostrarVista(vista: string) {
     this.vista = vista; // Mostrar la vista correspondiente en función del icono clicado
+
+    
+
   }
 
 
@@ -82,6 +102,13 @@ export class PrincipalComponent {
   opcion2() {
     console.log("Opción 2 seleccionada");
     // Aquí puedes implementar la lógica para la opción 2
+  }
+
+  logout() {
+    // Realizar acciones de cierre de sesión si es necesario
+
+    // Redirigir al usuario a la ruta de login
+    this.router.navigate(['/login']);
   }
 
 

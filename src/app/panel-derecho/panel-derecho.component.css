@@ -1,0 +1,59 @@
+/* Agrega tus estilos personalizados aquí */
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.btn-delete {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.btn-delete i {
+    font-size: 1rem;
+    color: rgb(216, 63, 63);
+    margin-right: 5px;
+}
+.btn-generate {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-generate:hover {
+    background-color: #0056b3;
+}
+.pi:hover {
+    color: rgb(255, 0, 0); /* Cambia el color del icono cuando el mouse está sobre él */
+    cursor: pointer; /* Cambia el cursor a un puntero */
+}

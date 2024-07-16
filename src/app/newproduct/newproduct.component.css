@@ -64,3 +64,7 @@ button[type="submit"]:hover {
     margin: 0 auto !important;
     text-align: center;
   }
+
+  .uppercase-input {
+    text-transform: uppercase;
+  }

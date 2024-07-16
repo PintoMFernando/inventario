@@ -1,123 +1,75 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-<p-table #dt1 [value]="allproductos" [tableStyle]="{ 'min-width': '68rem' }"
-[paginator]="true"
-[rows]="1"
-[globalFilterFields]="['nombre','codigo']"
-[scrollable]="true" 
+<p-splitter [style]="{ height: '100vh' ,width:'100%'}" styleClass="mb-5" [panelSizes]="[75, 25]">
+    <ng-template pTemplate>
+        <!-- Primera mitad: tablas de productos y salidas -->
+        <div style="height: 100%; overflow-y: auto;">
+            <p-table #dt1 [value]="allproductos" [tableStyle]="{ 'min-width': '50rem' }"
+                [paginator]="true"
+                [rows]="1"
+                [globalFilterFields]="['nombre','codigo']"
+                [scrollable]="true">
+                
+                <ng-template pTemplate="caption">
+                    <tr style="display: flex; justify-content: space-between;">
+                        <th>
+                            <span>FECHA: {{fechaDeHoy}}</span>
+                        </th>
+                        <th style="flex-grow: 1; display: flex; justify-content: center;">
+                            SALIDAS
+                        </th>
+                        <th style="display: flex; align-items: center;">
+                            <span class="p-input-icon-right">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Busqueda" />
+                            </span>
+                        </th>
+                    </tr>
+                </ng-template>
+                
 
+                <ng-template pTemplate="body" let-product>
+                    <table class="center">
+                        <tr>
+                            <td align="center"><strong>Producto:</strong> {{ product.nombre }}</td>
+                            <td><strong>Stock:</strong> {{ getStock(product.idproducto,product.stockproductos[this.selectedStock].stock,product.cantidadvista) }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Precio Unidad:</strong>
+                                <select id="precioSelect" (change)="onPrecioChange($event)">
+                                    <option value="" selected disabled>Seleccione monto</option>
+                                <option *ngFor="let producto of product.stockproductos" [value]="producto.precio">
+                                  {{ producto.precio }}
+                                </option>
+                              </select></td>
+                            <td><strong>Salida:</strong><input type="number" style="width: 100px;" [(ngModel)]="product.cantidadvista" ></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Precio Total:</strong> {{ getPrecioTotal(this.selectedPrecio,product.cantidadvista,descuento) }}</td>
+                            <td><strong>Descuento:</strong><input type="number" id="descuento" name="descuento" min="0" step="0.01" style="width: 100px;" [(ngModel)]="descuento"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><button (click)="agregarSalida(product.idproducto,product.precio,product.cantidadvista,product.stockproductos[this.selectedStock].stock,descuento,product.nombre,product.stockproductos[this.selectedStock].idstockproducto )">Agregar</button></td>
+                        </tr>
+                    </table>
+                </ng-template>
+            </p-table>
 
->
-<ng-template pTemplate="caption">
-    <tr>
-        <th>
-            <span>FECHA: {{fechaDeHoy}}</span>
-        </th>   
-    
-        <th style="flex-grow: 1; display: flex; justify-content: center; font-size: 40px;">
- 
-            SALIDAS
-        </th>
-    
-        <th style="flex-grow: 1; display: flex; justify-content: flex-end;">   
-            <span class="p-input-icon-right" style="margin-left: 800px;">
-                <i class="pi pi-search" style="margin:1px 1px 80"></i>
-                <input pInputText type="text" (input)="dt1.filterGlobal(
-                    $any($event.target).value, 'contains')" placeholder="Busqueda" />
-            </span>
-        </th>
-    </tr>
-    
-
-</ng-template>
-
-
-
-<ng-template pTemplate="body" let-product>
-     
-           
-    <table class="center">
-        <tr>
-            <td   align="center"><strong>Producto:</strong> {{ product.nombre }}</td> 
-            <td><strong>Stock:</strong> {{product.stock}}</td>
-        </tr>
-        <tr>
-          
-          <td><strong>Precio Unidad:</strong>{{product.precio}}</td>
-          <td> <strong>Salida:</strong><input type="number" style="width: 100px;" [(ngModel)]="cantidadAComprar" ></td>
-        </tr>
-        <tr>
-            <td><strong>Precio Total:</strong> {{ getPrecioTotal(product.precio,cantidadAComprar,descuento) }}</td>
-            <td><strong>Descuento:</strong><input type="number" id="descuento" name="descuento"  min="0" step="0.01" style="width: 100px;"[(ngModel)]="descuento" ></td>
-            
-          </tr>
-        <tr>
-          <td colspan="2" align="center" ><button (click)="agregarSalida(product.idproducto,product.precio,cantidadAComprar,product.stock,descuento)" >Agregar</button></td>
-        </tr>
-      </table>
-
-
-</ng-template>
-    
-</p-table>
-
-
-
-
-
-<p-table #dt2 [value]="salidas" [tableStyle]="{ 'min-width': '68rem' }"
-[paginator]="true"
-[rows]="3"
-[globalFilterFields]="['nombre','codigo']"
-
->
-
-
-
-
-<ng-template pTemplate="header">
-    <tr>
-        <th>Codigo</th>
-        <th pSortableColumn="nombre">Nombre</th>
-        <th >Catidad</th>
-        <th>Precio Total</th>
-        <th>Fecha</th>
-        <th>Opciones</th>
-        <th>Proforma</th>
-
+            <p-splitter layout="vertical" [panelSizes]="[15, 85]">
+            <ng-template pTemplate>
         
-    </tr>
-</ng-template>
+                <app-panelinferior-salida></app-panelinferior-salida>
+            </ng-template>
 
-<ng-template pTemplate="body" let-salidas>
-    <tr>
-        <td>{{ salidas.idsalidas?.codigo }}</td>
-        <td>{{ salidas.idsalidas?.nombre }}</td>
-        <td>{{ salidas.cantidad }}</td>
-        <td>{{ salidas.preciototal }}</td>
-        <td>{{ salidas.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-        <td>
-        <span class="icon">
-            <i class="pi pi-pencil" style="font-size: 1rem;color: rgb(157, 216, 63); margin-right: 5px;" (click)="editarProducto(salidas.idsalidas?.nombre,salidas.idsalida,salidas.cantidad,salidas.preciototal,salidas.preciosalida,salidas.idsalidas?.stock,salidas.idproducto,salidas.descuento)" title="Editar"></i>
-            <i class="pi pi-trash" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(salidas.idsalida,salidas.identradas?.nombre,salidas.idproducto,salidas.cantidad)" title="Eliminar"></i>
+        </p-splitter>
+        </div>
+    </ng-template>
 
-        </span>
-    </td>
-    <td>
-        <span class="icon-container">
-          <i class="pi pi-file-o" style="font-size: 1rem; color: rgb(63, 73, 216); margin-right: 5px;" (click)="proforma(salidas.idsalida,salidas.proformas?.estado,salidas.proformas?.nombre,salidas.proformas?.ci,salidas.proformas?.telefono)" title="Eliminar"></i>
-          <p-tag 
-          [value]="getEstadoText(salidas.proformas?.estado)" 
-          [severity]="getSeverity(salidas.proformas?.estado)">
-        </p-tag>
-        
-        </span>
-      </td>
-      
-      
-      
-</ng-template>
     
-</p-table>
 
 
+    <ng-template pTemplate>
+        <!-- Segunda mitad: componente separado -->
+        <app-panel-derecho  ></app-panel-derecho>
+    </ng-template>
+</p-splitter>

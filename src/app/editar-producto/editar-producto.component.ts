@@ -112,11 +112,19 @@ export class EditarProductoComponent {
   }
 
 
-  
-  
+  onInputChange(event: any, dat: any) {
+    // Transform the input value to uppercase and update the model
+    const newValue = event.target.value.toUpperCase();
+    dat.nombre = newValue;
+    // Update the input value in the DOM (not necessary if using [(ngModel)])
+    event.target.value = newValue;
+  }
 
 
 }
+
+
+
 function uuidv4(): string | Blob {
   throw new Error('Function not implemented.');
 }

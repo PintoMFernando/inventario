@@ -9,6 +9,8 @@ export class ModalserviceService {
 
   private dialogRef: any; 
   private emisor = new Subject<any>();
+  private emisor2 = new Subject<any>();
+  private emisor3 = new Subject<any>();
 
   constructor(public dialogService: DialogService,) {
 
@@ -38,11 +40,38 @@ export class ModalserviceService {
      this.emisor.next(mensaje);
    }
 
+   enviarMensaje2(mensaje: any) {
+    // console.log("entra la enviar mensaje");
+     this.emisor.next(mensaje);
+   }
+
+   enviarMensajeSalidas(mensaje: any) {
+    // console.log("entra la enviar mensaje");
+     this.emisor2.next(mensaje);
+   }
+
+   enviarMensaje3(mensaje: any) {
+    // console.log("entra la enviar mensaje");
+     this.emisor3.next(mensaje);
+   }
+
+   obtenerMensaje2() {
+    return this.emisor.asObservable();
+  }
+
    obtenerMensaje() {
     return this.emisor.asObservable();
   }
 
+  
  
+  obtenerMensajeSalidas() {
+    return this.emisor2.asObservable();
+  }
 
+  obtenerMensaje3() {
+    return this.emisor3.asObservable();
+  }
+  
 
 }

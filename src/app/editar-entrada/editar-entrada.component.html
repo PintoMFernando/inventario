@@ -40,7 +40,7 @@
         <div class="form-group" >
             <label for="precio"><strong>Detalle:</strong> </label>
             
-            <textarea type="number" id="detalle" name="detalle"  min="0" step="0.01" [(ngModel)]="detalle" required></textarea>
+            <textarea type="number" id="detalle" name="detalle"  min="0" step="0.01" [(ngModel)]="detalle" class="uppercase-input" (input)="onInputChange($event, detalle)"required></textarea>
         </div>
         
     </td>

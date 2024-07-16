@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, catchError, firstValueFrom, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { v4 as uuidv4 } from 'uuid';
 import { producto } from '../models/producto.model';
@@ -17,7 +17,7 @@ export class SalidasService {
     private headers = { 'Content-Type': 'application/json' };
 
 
-    async agregarSalidas( idsalida:string,idproducto:any,precioProducto:number,cantidad:any,preciototal:any,descuento:any) {
+    async agregarSalidas( idsalida:string,idproducto:any,precioProducto:number,cantidad:any,preciototal:any,descuento:any,idproforma:string,idstockproducto:string) {
 
       const jsondatos={
         idsalida:idsalida,
@@ -27,6 +27,8 @@ export class SalidasService {
         preciototal:preciototal,
         descuento:descuento,
         proforma: 1,
+        idproforma:idproforma,
+        idstockproducto:idstockproducto,
 
       }
 
@@ -41,9 +43,9 @@ export class SalidasService {
       }
       }
 
-      async traerSalidas(){
+      async traerSalidasProforma(){   //ante estaba con "salida" poner proforma
 
-        return await this.http.get(`${this.baseUrl}/salida`);
+        return await this.http.get(`${this.baseUrl}/proforma`);
       
 
 
@@ -54,6 +56,12 @@ export class SalidasService {
   
   }
 
+
+  async traerProformaFecha(anio:number,mes:number){
+    console.log("asdasd",anio,mes)
+       return this.http.get<producto>(`${this.baseUrl}/proforma/admproforma/${anio}/${mes}`);
+   
+   }
 
 
     async editarSalidas(idsalida:string,cantidad:number,preciototal:number,preciosalida:number,nuevacantidad:number,idproducto:string){
@@ -95,6 +103,24 @@ export class SalidasService {
       return this.http.get<producto>(`${this.baseUrl}/salida/proformaimp/${isdalida}`);
       
      }
+
+
+  
+
+     traerunaSalidaEditar(isdalida:string): Observable<producto>{
+      console.log("que es exacaamnte esto??", isdalida)
+      return this.http.get<producto>(`${this.baseUrl}/salida/editsalida/${isdalida}`).pipe(
+       catchError((error)=>{
+         console.log('Error desde el servicio',error)
+         return throwError(() => error);
+       })
+      )
+      
+      }
+
+
+
+     
 
 
 

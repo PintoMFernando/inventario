@@ -1,0 +1,131 @@
+/* proforma.component.css */
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.logo {
+  max-width: 150px;
+  height: auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.details {
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th, .table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+
+
+.sub-title {
+  font-size: 15px; /* Ajusta el tamaño de fuente según tus necesidades */
+  color: #d15a5a; /* Color del texto */
+  margin-top: 5px; /* Espacio entre "Proforma" y "Original" */
+}
+
+.sub-title1 {
+  font-size: 15px; /* Ajusta el tamaño de fuente según tus necesidades */
+  color: #999; /* Color del texto */
+  margin-top: 5px; /* Espacio entre "Proforma" y "Original" */
+}
+
+
+.extra-content {
+  font-size: 0.8rem; /* Tamaño de fuente más pequeño para el contenido adicional */
+  margin-top: 10px; /* Ajuste de margen si es necesario */
+}
+
+/* styles.css (o proforma.component.css) */
+
+
+/* proforma.component.css */
+
+.container {
+  position: relative;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  height: 100%; /* Asegura que ocupe todo el alto disponible */
+}
+
+
+
+.container1 {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  height: 100vh; /* Ajusta la altura del contenedor al 100% del viewport */
+  background-color: #f0f0f0; /* Color de fondo para container1 */
+  margin-bottom: 30px; /* Espacio entre los contenedores */
+}
+
+.container {
+  width: 100%; /* Ancho del contenedor principal */
+  background-color: #fff; /* Color de fondo para container */
+  padding: 20px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  margin-bottom: 30px; /* Espacio entre las proformas */
+}
+
+
+
+
+
+.watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 10rem; /* Ajusta el tamaño según sea necesario */
+  color: rgba(255, 0, 0, 0.2); /* Ajusta el color y la opacidad según sea necesario */
+  z-index: 1000; /* Asegúrate de que esté en la parte superior */
+  pointer-events: none; /* Permite que el contenido sea interactivo */
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.container1 {
+  position: relative;
+  z-index: 1; /* Coloca el contenido por encima de la marca de agua */
+}

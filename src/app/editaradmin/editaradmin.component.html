@@ -1,0 +1,31 @@
+<div class="form-container">
+
+    <form [formGroup]="formulario" (ngSubmit)="editarUser()">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" formControlName="username" type="text" class="form-control" />
+        <div *ngIf="formulario.controls['username'].invalid && formulario.controls['username'].touched" class="error">
+          El nombre es requerido.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="ci">Correo</label>
+        <input id="ci" formControlName="email" type="text" class="form-control" />
+        <div *ngIf="formulario.controls['email'].invalid && formulario.controls['email'].touched" class="error">
+          El email es requerido y debe contener @.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input id="password" formControlName="password" type="password" class="form-control" />
+        <div *ngIf="formulario.controls['password'].invalid && formulario.controls['password'].touched" class="error">
+          La contraseña es requerida y debe tener mas de 5 caracteres.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Guardar</button>
+    </form>
+  </div>
+  

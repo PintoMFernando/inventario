@@ -1,0 +1,35 @@
+<h2 style="text-align: center;">Lista Productos</h2>
+
+<form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio T.</th>
+                <th>Cantidad</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let dato of datosAcumulados">
+                <td>{{ dato.nombre }}</td>
+                <td>{{ dato.preciototal }}</td>
+                <td>{{ dato.cantidad }}</td>
+                <td><i class="pi pi-times" style="font-size: 1rem;color: rgb(216, 63, 63); margin-right: 5px;" (click)="eliminar(dato.idsalida,dato.idproducto,dato.cantidad)" title="Eliminar"></i></td>
+                            
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    
+    
+    
+    <br><br>
+    
+    <h3>TOTAL:{{ calcularTotal() }}</h3>
+    <!-- Aquí puedes mostrar el resultado de tus cálculos -->
+    <!-- Por ejemplo, usando interpolación o directivas de Angular -->
+    
+    <button  class="btn-generate"  type="button"  [disabled]="!datosAcumulados || datosAcumulados.length === 0" (click)="generarproforma(datosAcumulados)">Generar</button>
+</form>

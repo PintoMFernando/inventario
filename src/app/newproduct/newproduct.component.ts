@@ -73,9 +73,9 @@ async onUpload(event: any){
 }
 
 async submitForm() {
-
+   const idproducto=uuidv4()
   const formDataelectronicos = new FormData();
-  formDataelectronicos.append('idproducto', uuidv4());
+  formDataelectronicos.append('idproducto', idproducto);
   formDataelectronicos.append('image', this.evento);
   formDataelectronicos.append('nombre', this.producto.nombre);
   formDataelectronicos.append('descripcion', this.producto.descripcion);
@@ -85,11 +85,12 @@ async submitForm() {
   formDataelectronicos.append('stock', this.producto.stock);
   //formDataelectronicos.append('filename', "gato");
 
-  
+  const codigo = "PD" + (Number(this.conteoProducto) + 1+".0")
 
   console.log('Producto registradooo454:', this.producto);
   try {
     const response = await this.productoService.createproducto(formDataelectronicos);
+    await this.productoService.createstockproducto(this.producto.precio,this.producto.descripcion,codigo,this.producto.stock,idproducto);
     await this.messageService.add({ severity: 'info', summary: 'Confirmado!', detail: 'Producto Creado Con exito' });
     await  this.modalService.closeModal();
     await this.modalService.enviarMensaje('que se ejecute');
@@ -107,6 +108,13 @@ async submitForm() {
 
 
 
+onInputChange(event: any, nombre: any) {
+ 
+  const newValue = event.target.value.toUpperCase();
+  nombre = newValue;
+  
+  event.target.value = newValue;
+}
 
 
 }

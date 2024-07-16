@@ -30,10 +30,11 @@ import { ProformaimpComponent } from './proformaimp/proformaimp.component';
 ];*/
 const routes: Routes = [{
   path:'',
+  
   component:AppComponent,
   children:[
     { path: 'login', component: WelcomeComponent },
-    { path: 'principal', component: PrincipalComponent },
+    { path: 'principal/:username/:rol', component: PrincipalComponent },
     { path: 'productos', component: ProductosComponent },
     { path: 'entradasalida', component: EntradasalidaComponent },
     { path: 'informe', component: InformeComponent },
@@ -41,9 +42,9 @@ const routes: Routes = [{
     { path: 'reporteimp/:fechainicio/:fechafinal/:tiporeporte', component: ReporteimpComponent },
     { path: 'reporteimpmesanio/:selectanio/:selectmes/:tiporeporte', component:ReporteimpmesanioComponent},
     { path: 'reporteimpdia/:fecha/:tiporeporte', component:ReporteimpdiaComponent},
-    { path: 'proforma/:idsalida/:nombre/:ci/:telefono', component:ProformaimpComponent},
+    { path: 'proforma/:idproforma', component:ProformaimpComponent},
      
-   //{ path: '**', redirectTo: '' } // Redirecciona cualquier otra ruta a la principal
+  
   
   
    

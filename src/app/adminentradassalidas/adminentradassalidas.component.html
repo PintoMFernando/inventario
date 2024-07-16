@@ -3,9 +3,9 @@
     <ng-template pTemplate="caption">
       <div class="header-row">
         <div class="header">Año:</div>
-        <p-dropdown [options]="anios" [(ngModel)]="selectanio" optionLabel="anio" optionValue="value" placeholder="Seleccione Año"></p-dropdown>
+        <p-dropdown *ngIf="anios" [options]="anios" [(ngModel)]="selectanio" optionLabel="anio" optionValue="value" placeholder="Seleccione Año"></p-dropdown>
         <div class="header">Mes:</div>
-        <p-dropdown [options]="mes" [(ngModel)]="selectmes" optionLabel="mes" optionValue="value" placeholder="Seleccione Mes"></p-dropdown>
+        <p-dropdown *ngIf="mes" [options]="mes" [(ngModel)]="selectmes" optionLabel="mes" optionValue="value" placeholder="Seleccione Mes"></p-dropdown>
         <button (click)="buscar(selectanio,selectmes)" style="width: 70px;">Buscar</button>
 
         <div class="search-container">

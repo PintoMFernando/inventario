@@ -16,14 +16,15 @@ export class EntradasService {
     private headers = { 'Content-Type': 'application/json' };
 
 
-    async agregarEntradas( idproducto:any,cantidadProducto:any,precio:any, detalle:any) {
+    async agregarEntradas( idproducto:any,cantidadProducto:any,precio:number, detalle:any,precioTotal:number) {
 
       const jsondatos={
         identrada:uuidv4(),
         idproducto:idproducto,
         cantidad:cantidadProducto,
-        precioentrada:precio,
+        precioentrada:Number(precio),
         detalle:detalle,
+        preciototal:precioTotal,
 
       }
 
@@ -38,8 +39,8 @@ export class EntradasService {
       }
       }
 
-      async traerEntradas(){
-
+      async traerEntradas(fecha:string){
+        console.log("dasdasd fecha",fecha)
         return await this.http.get(`${this.baseUrl}/entrada`);
     
     }
@@ -53,19 +54,20 @@ export class EntradasService {
 
 
 
-    async editarEntradas(identrada:string,cantidad:number,precioentrada:number,nuevacantidad:number,tipo:number,idproducto:string,detalle:string){
+    async editarEntradas(identrada:string,cantidad:number,precioentrada:number,nuevacantidad:number,tipo:number,idproducto:string,detalle:string,idstockproducto:string){
 
       const jsondatos={
         idproducto:idproducto,
         cantidad:cantidad,
         precioentrada:Number(precioentrada),
-       detalle:detalle
+       detalle:detalle,
+       
         //tipo:tipo
 
       }
       console.log("es minjson",jsondatos)
        try{
-        return  await firstValueFrom(this.http.patch(`${this.baseUrl}/entrada/${identrada}/${nuevacantidad}`, jsondatos, { headers: this.headers }))
+        return  await firstValueFrom(this.http.patch(`${this.baseUrl}/entrada/${identrada}/${nuevacantidad}/${idstockproducto}`, jsondatos, { headers: this.headers }))
        }catch(e){
          return e
        }
